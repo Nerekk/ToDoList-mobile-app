@@ -1,11 +1,16 @@
 package com.example.todolist_mobile_app.AddingActivity;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +19,11 @@ import com.example.todolist_mobile_app.Category;
 import com.example.todolist_mobile_app.Database.DatabaseManager;
 import com.example.todolist_mobile_app.Database.TaskDatabase;
 import com.example.todolist_mobile_app.R;
-import com.example.todolist_mobile_app.Recycler.RecyclerViewManager;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class AddTaskActivity extends AppCompatActivity {
     public TaskDatabase db;
@@ -22,6 +31,8 @@ public class AddTaskActivity extends AppCompatActivity {
     Spinner spinnerCategory, spinnerNotifs;
     ArrayAdapter<String> catAdapter, notifAdapter;
     ImageView ivClock, ivCalendar;
+    private int hour, minute;
+    DatePickerDialog datePickerDialog;
 
     private String[] categories;
     private String[] notifications = {"Off", "1 minute", "5 minutes", "15 minutes", "1 hour"};
@@ -37,6 +48,7 @@ public class AddTaskActivity extends AppCompatActivity {
         setSpinners();
         setListeners();
     }
+
 
     private void mapComponents() {
         findViewById(R.id.addTaskButton).setOnClickListener(this::saveTaskAndReturn);
@@ -64,8 +76,47 @@ public class AddTaskActivity extends AppCompatActivity {
         spinnerNotifs.setAdapter(notifAdapter);
     }
 
-    private void setListeners() {
+    private void showDatePicker() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month++;
 
+                LocalDate date = LocalDate.of(year, month, day);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                String formattedDate = date.format(formatter);
+                dateText.setText(formattedDate);
+            }
+        };
+
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
+        datePickerDialog.show();
+    }
+
+    private void showTimePicker() {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                hour = selectedHour;
+                minute = selectedMinute;
+                timeText.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+            }
+        };
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
+        timePickerDialog.setTitle("Select time");
+        timePickerDialog.show();
+    }
+
+    private void setListeners() {
+        ivClock.setOnClickListener(view -> showTimePicker());
+        ivCalendar.setOnClickListener(view -> showDatePicker());
     }
 
     private void fillCategories() {

@@ -164,23 +164,25 @@
     <EditText
         android:id="@+id/timeText"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
         android:id="@+id/dateText"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/timeText" />
 
     <ImageView
         android:id="@+id/ivCalendar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginTop="5dp"
         android:clickable="true"
         app:layout_constraintStart_toEndOf="@+id/dateText"
@@ -189,8 +191,8 @@
 
     <ImageView
         android:id="@+id/ivClock"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginTop="5dp"
         android:clickable="true"
         app:layout_constraintStart_toEndOf="@+id/timeText"
