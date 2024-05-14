@@ -3,6 +3,7 @@ package com.example.todolist_mobile_app;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +17,7 @@ public class AddTaskActivity extends AppCompatActivity {
     public TaskDatabase db;
     EditText addTitle, addDesc, timeText, dateText;
     Spinner spinnerCategory, spinnerNotifs;
+    ImageView ivClock, ivCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +26,26 @@ public class AddTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_add);
 
         db = DatabaseManager.initDatabase(this);
-
-        findViewById(R.id.addTaskButton).setOnClickListener(this::saveTaskAndReturn);
+        mapComponents();
+        setListeners();
     }
 
-    public void mapComponents() {
+    private void mapComponents() {
+        findViewById(R.id.addTaskButton).setOnClickListener(this::saveTaskAndReturn);
+
+        addTitle = findViewById(R.id.addTitle);
+        addDesc = findViewById(R.id.addDesc);
+        timeText = findViewById(R.id.timeText);
+        dateText = findViewById(R.id.dateText);
+
+        spinnerCategory = findViewById(R.id.spinnerCategory);
+        spinnerNotifs = findViewById(R.id.spinnerNotifs);
+
+        ivClock = findViewById(R.id.ivClock);
+        ivCalendar = findViewById(R.id.ivCalendar);
+    }
+
+    private void setListeners() {
 
     }
 
