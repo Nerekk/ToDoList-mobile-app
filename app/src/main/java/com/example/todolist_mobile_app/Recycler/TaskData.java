@@ -1,11 +1,17 @@
 package com.example.todolist_mobile_app.Recycler;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.example.todolist_mobile_app.Category;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Entity(tableName = "tasks_table")
 public class TaskData {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String title;
     private String description;
     private LocalDateTime startTime;
@@ -27,6 +33,14 @@ public class TaskData {
 
         this.startTime = LocalDateTime.now();
         this.isNotifyOn = false;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -111,5 +125,14 @@ public class TaskData {
         } else {
             return "Off";
         }
+    }
+
+    @Override
+    public String toString() {
+        return "TaskData{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

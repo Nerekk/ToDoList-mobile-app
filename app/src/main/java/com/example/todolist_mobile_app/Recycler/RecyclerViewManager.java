@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist_mobile_app.Category;
+import com.example.todolist_mobile_app.Database.DatabaseManager;
 import com.example.todolist_mobile_app.MainActivity;
 import com.example.todolist_mobile_app.R;
 
@@ -20,12 +21,14 @@ public class RecyclerViewManager {
 
     public RecyclerViewManager(MainActivity activity) {
         this.activity = activity;
-
-        tasks = getExampleData();
-        recyclerView = activity.findViewById(R.id.recyclerView);
-        adapter = new TaskListAdapter(tasks, activity.getApplication());
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.setAdapter(adapter);
+        DatabaseManager.getAll(list -> {
+            tasks = list;
+            recyclerView = activity.findViewById(R.id.recyclerView);
+            adapter = new TaskListAdapter(tasks, activity.getApplication());
+            recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+            recyclerView.setAdapter(adapter);
+        });
+//        tasks = getExampleData();
     }
 
     private List<TaskData> getExampleData() {

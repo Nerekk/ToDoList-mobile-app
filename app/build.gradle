@@ -39,4 +39,6 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation libs.recyclerview
     implementation libs.recyclerview.selection
+    implementation libs.room.runtime
+    annotationProcessor libs.room.compiler
 }

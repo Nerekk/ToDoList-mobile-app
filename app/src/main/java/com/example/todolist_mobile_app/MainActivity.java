@@ -4,20 +4,14 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todolist_mobile_app.Database.DatabaseManager;
+import com.example.todolist_mobile_app.Database.TaskDatabase;
 import com.example.todolist_mobile_app.Recycler.RecyclerViewManager;
 import com.example.todolist_mobile_app.Recycler.TaskData;
-import com.example.todolist_mobile_app.Recycler.TaskListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public TaskDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        db = DatabaseManager.initDatabase(this);
         new RecyclerViewManager(this);
     }
 
