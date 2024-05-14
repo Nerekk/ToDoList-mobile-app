@@ -11,13 +11,16 @@ import androidx.annotation.NonNull;
 
 import com.example.todolist_mobile_app.R;
 import com.example.todolist_mobile_app.Recycler.TaskData;
+import com.example.todolist_mobile_app.Recycler.TaskListAdapter;
 
 public class DialogInfo extends Dialog {
     private TaskData task;
+    private TaskListAdapter adapter;
 
-    public DialogInfo(@NonNull Context context, TaskData task) {
+    public DialogInfo(@NonNull Context context, TaskListAdapter adapter, TaskData task) {
         super(context);
         this.task = task;
+        this.adapter = adapter;
         prepareDialog();
         show();
     }

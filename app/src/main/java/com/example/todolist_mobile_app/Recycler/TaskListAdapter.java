@@ -1,18 +1,14 @@
 package com.example.todolist_mobile_app.Recycler;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist_mobile_app.DialogInfo;
+import com.example.todolist_mobile_app.Dialogs.DialogInfo;
 import com.example.todolist_mobile_app.R;
 
 import java.util.List;
@@ -61,7 +57,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             @Override
             public void onClick(View view) {
                 TaskData task = tasks.get(index);
-                new DialogInfo(context, task);
+                new DialogInfo(context, TaskListAdapter.this, task);
             }
         });
     }
