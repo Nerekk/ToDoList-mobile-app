@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todolist_mobile_app.DialogInfo;
 import com.example.todolist_mobile_app.R;
 
 import java.util.List;
@@ -60,19 +61,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             @Override
             public void onClick(View view) {
                 TaskData task = tasks.get(index);
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.dialog_task_info);
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                ((TextView)dialog.findViewById(R.id.dialogTitle)).setText(task.getTitle());
-                ((TextView)dialog.findViewById(R.id.dialogDesc)).setText(task.getDescription());
-                ((TextView)dialog.findViewById(R.id.dialogCategory)).setText(task.getCategory().toString());
-                ((TextView)dialog.findViewById(R.id.dialogNotifs)).setText(task.getNotificationStatus());
-                ((TextView)dialog.findViewById(R.id.dialogEnd)).setText(task.getEndTimeFormatted());
-                ((TextView)dialog.findViewById(R.id.dialogStart)).setText(task.getStartTimeFormatted());
-
-                dialog.show();
+                new DialogInfo(context, task);
             }
         });
     }
