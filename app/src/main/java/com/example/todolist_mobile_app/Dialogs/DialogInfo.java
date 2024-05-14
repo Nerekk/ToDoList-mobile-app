@@ -1,4 +1,4 @@
-package com.example.todolist_mobile_app;
+package com.example.todolist_mobile_app.Dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.todolist_mobile_app.R;
 import com.example.todolist_mobile_app.Recycler.TaskData;
 
 public class DialogInfo extends Dialog {
