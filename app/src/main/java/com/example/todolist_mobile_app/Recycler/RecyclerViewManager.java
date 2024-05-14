@@ -1,6 +1,7 @@
 package com.example.todolist_mobile_app.Recycler;
 
 import android.content.Context;
+import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,16 @@ public class RecyclerViewManager {
             recyclerView.setAdapter(adapter);
         });
 //        tasks = getExampleData();
+        prepareFloatingActionButton();
+    }
+
+    private void prepareFloatingActionButton() {
+        activity.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private List<TaskData> getExampleData() {
