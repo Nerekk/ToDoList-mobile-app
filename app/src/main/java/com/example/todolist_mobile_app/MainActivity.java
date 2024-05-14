@@ -7,10 +7,10 @@ import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.todolist_mobile_app.AddingActivity.AddTaskActivity;
 import com.example.todolist_mobile_app.Database.DatabaseManager;
 import com.example.todolist_mobile_app.Database.TaskDatabase;
 import com.example.todolist_mobile_app.Recycler.RecyclerViewManager;
-import com.example.todolist_mobile_app.Recycler.TaskData;
 
 public class MainActivity extends AppCompatActivity {
     public TaskDatabase db;
