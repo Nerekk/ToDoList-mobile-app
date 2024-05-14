@@ -86,11 +86,13 @@ public class TaskData {
     }
 
     public String getStartTimeFormatted() {
+        if (startTime == null) return "None";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return startTime.format(formatter);
     }
 
     public String getEndTimeFormatted() {
+        if (endTime == null) return "None";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return endTime.format(formatter);
     }
@@ -100,6 +102,14 @@ public class TaskData {
             return DONE;
         } else {
             return INCOMPLETE;
+        }
+    }
+
+    public String getNotificationStatus() {
+        if (isNotifyOn) {
+            return "On";
+        } else {
+            return "Off";
         }
     }
 }

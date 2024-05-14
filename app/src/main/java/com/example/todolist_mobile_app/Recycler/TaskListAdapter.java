@@ -1,9 +1,13 @@
 package com.example.todolist_mobile_app.Recycler;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +39,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-//        int index = holder.getAdapterPosition();
+        int index = holder.getAdapterPosition();
 
         holder.taskTitle.setText(tasks.get(position).getTitle());
         holder.taskDate.setText(tasks.get(position).getStartTimeFormatted());
@@ -52,6 +56,25 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             holder.taskNotification.setImageResource(R.mipmap.ic_notifications_off);
         }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TaskData task = tasks.get(index);
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_task_info);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                ((TextView)dialog.findViewById(R.id.dialogTitle)).setText(task.getTitle());
+                ((TextView)dialog.findViewById(R.id.dialogDesc)).setText(task.getDescription());
+                ((TextView)dialog.findViewById(R.id.dialogCategory)).setText(task.getCategory().toString());
+                ((TextView)dialog.findViewById(R.id.dialogNotifs)).setText(task.getNotificationStatus());
+                ((TextView)dialog.findViewById(R.id.dialogEnd)).setText(task.getEndTimeFormatted());
+                ((TextView)dialog.findViewById(R.id.dialogStart)).setText(task.getStartTimeFormatted());
+
+                dialog.show();
+            }
+        });
     }
 
     @Override
