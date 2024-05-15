@@ -78,7 +78,7 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     private void setSpinners() {
-        fillCategories();
+        categories = Categories.fillCategories(false);
         fillNotifications();
         catAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, categories);
 //        catAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
@@ -143,7 +143,7 @@ public class AddTaskActivity extends AppCompatActivity {
         ivSave.setOnClickListener(this::saveTaskAndReturn);
     }
 
-    private void fillCategories() {
+    private void fillCategories(boolean allFlag) {
         Categories[] c = Categories.values();
         categories = new String[c.length];
         for (int i = 0; i < c.length; i++) {

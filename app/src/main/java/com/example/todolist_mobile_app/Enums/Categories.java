@@ -17,4 +17,24 @@ public enum Categories {
         }
         throw new IllegalArgumentException("No enum constant with value " + value);
     }
+
+    public static String[] fillCategories(boolean allFlag) {
+        String[] categories;
+        Categories[] c = Categories.values();
+
+        if (allFlag) {
+            categories = new String[c.length+1];
+            categories[0] = "All";
+            for (int i = 0; i < c.length; i++) {
+                categories[i+1] = c[i].toString();
+            }
+        } else {
+            categories = new String[c.length];
+            for (int i = 0; i < c.length; i++) {
+                categories[i] = c[i].toString();
+            }
+        }
+
+        return categories;
+    }
 }
