@@ -111,8 +111,8 @@ public class AddTaskActivity extends AppCompatActivity {
                 timeText.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
             }
         };
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, hour, minute, true);
         timePickerDialog.setTitle("Select time");
         timePickerDialog.show();
     }
