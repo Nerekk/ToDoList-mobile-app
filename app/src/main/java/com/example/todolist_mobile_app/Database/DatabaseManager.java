@@ -4,9 +4,8 @@ import android.content.Context;
 
 import androidx.room.Room;
 
-import com.example.todolist_mobile_app.Interfaces.DataCallback;
 import com.example.todolist_mobile_app.Interfaces.TaskDataDao;
-import com.example.todolist_mobile_app.Recycler.TaskData;
+import com.example.todolist_mobile_app.Data.TaskData;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -21,7 +20,7 @@ public class DatabaseManager {
             database = Room.databaseBuilder(
                     context.getApplicationContext(),
                     TaskDatabase.class,
-                    "tasks_db").build();
+                    "tasks_db").allowMainThreadQueries().build();
         }
         return database;
     }
@@ -42,12 +41,19 @@ public class DatabaseManager {
         });
     }
 
-    public static synchronized void getAll(DataCallback callback) {
-        executor.execute(() -> {
-            if (database == null) return;
-            TaskDataDao dao = database.taskDataDao();
-            List<TaskData> tasks = dao.getAll();
-            callback.onDataLoaded(tasks);
-        });
+//    public static synchronized void getAll(DataCallback callback) {
+//        executor.execute(() -> {
+//            if (database == null) return;
+//            TaskDataDao dao = database.taskDataDao();
+//            List<TaskData> tasks = dao.getAll();
+//            callback.onDataLoaded(tasks);
+//        });
+//    }
+
+    public static synchronized List<TaskData> getAll() {
+        if (database == null) return null;
+        TaskDataDao dao = database.taskDataDao();
+        return dao.getAll();
+//        callback.onDataLoaded(tasks);
     }
 }
