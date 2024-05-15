@@ -24,10 +24,13 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <Spinner
+            android:id="@+id/filterSpinner"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:gravity="center"/>
+            android:gravity="center"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="20dp" />
 
         <FrameLayout
             android:id="@+id/searchContainer"
