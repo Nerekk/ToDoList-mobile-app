@@ -6,7 +6,7 @@ import androidx.room.TypeConverters;
 
 import com.example.todolist_mobile_app.Database.Converters.LocalDateTimeConverter;
 import com.example.todolist_mobile_app.Interfaces.TaskDataDao;
-import com.example.todolist_mobile_app.Recycler.TaskData;
+import com.example.todolist_mobile_app.Data.TaskData;
 
 @Database(entities = {TaskData.class}, version = 1, exportSchema = false)
 @TypeConverters(LocalDateTimeConverter.class)

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.todolist_mobile_app.R;
-import com.example.todolist_mobile_app.Recycler.TaskData;
+import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Recycler.TaskListAdapter;
 
 public class DialogInfo extends Dialog {

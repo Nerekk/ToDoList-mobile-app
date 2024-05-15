@@ -1,9 +1,9 @@
-package com.example.todolist_mobile_app.Recycler;
+package com.example.todolist_mobile_app.Data;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.todolist_mobile_app.Category;
+import com.example.todolist_mobile_app.Enums.Categories;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,14 +18,14 @@ public class TaskData {
     private LocalDateTime endTime;
     private boolean isFinished;
     private boolean isNotifyOn;
-    private Category category;
+    private Categories category;
     // one more field for files/images
 
 
     public final static String DONE = "Done";
     public final static String INCOMPLETE = "Incomplete";
 
-    public TaskData(String title, String description, boolean isFinished, Category category) {
+    public TaskData(String title, String description, boolean isFinished, Categories category) {
         this.title = title;
         this.description = description;
         this.isFinished = isFinished;
@@ -91,11 +91,11 @@ public class TaskData {
         isNotifyOn = notifyOn;
     }
 
-    public Category getCategory() {
+    public Categories getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(Categories category) {
         this.category = category;
     }
 

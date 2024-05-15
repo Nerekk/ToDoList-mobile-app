@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.todolist_mobile_app.Recycler.TaskData;
+import com.example.todolist_mobile_app.Data.TaskData;
 
 import java.util.List;
 
