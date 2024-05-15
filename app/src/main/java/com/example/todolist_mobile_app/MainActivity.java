@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     public TaskDatabase db;
     public RecyclerViewManager rvManager;
 
+    Spinner menuSpinner;
+    SearchView menuSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,16 +61,16 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.appbar_menu_main, menu);
 
         MenuItem item = menu.findItem(R.id.filterMenu);
-        Spinner spinner = (Spinner) item.getActionView();
+        menuSpinner = (Spinner) item.getActionView();
 
         MenuItem item2 = menu.findItem(R.id.searchView);
-        SearchView searchView = (SearchView) item2.getActionView();
+        menuSearch = (SearchView) item2.getActionView();
 
 
-        prepSpinnerFilter(spinner);
+        prepSpinnerFilter(menuSpinner);
 
 
-        prepSearchViewFilter(searchView, spinner);
+        prepSearchViewFilter(menuSearch, menuSpinner);
         return super.onCreateOptionsMenu(menu);
     }
 
