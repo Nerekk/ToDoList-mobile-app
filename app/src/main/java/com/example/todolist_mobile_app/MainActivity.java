@@ -34,9 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.fab).setOnClickListener(this::goToAddTaskActivity);
 
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        new ToolbarManager(this);
         Log.i("ONCREATE", "ONCREATE");
     }
 
@@ -50,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         rvManager.getDataFromDB();
         Log.i("ONRESUME", "ONRESUME");
-
     }
 
 //    @Override
