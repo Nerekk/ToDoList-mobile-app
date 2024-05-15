@@ -23,6 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+
         <Spinner
             android:id="@+id/filterSpinner"
             android:layout_width="wrap_content"
@@ -32,29 +33,13 @@
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="20dp" />
 
-        <FrameLayout
-            android:id="@+id/searchContainer"
+        <EditText
+            android:id="@+id/searchEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
-
-            <EditText
-                android:id="@+id/searchEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Search task..."
-                android:inputType="text"/>
-
-        </FrameLayout>
-
-        <ImageView
-            android:id="@+id/searchIcon"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_search_48"
-            android:padding="8dp"
-            style="?android:borderlessButtonStyle"/>
+            android:textColor="@color/white"
+            android:hint="Search task..."
+            android:inputType="text" />
 
     </androidx.appcompat.widget.Toolbar>
 

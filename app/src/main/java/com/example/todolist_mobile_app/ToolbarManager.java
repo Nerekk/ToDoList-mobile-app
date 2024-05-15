@@ -1,5 +1,6 @@
 package com.example.todolist_mobile_app;
 
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -12,8 +13,6 @@ import com.example.todolist_mobile_app.Enums.Categories;
 
 public class ToolbarManager {
     Spinner filterSpinner;
-    ImageView ivSearch;
-    FrameLayout searchContainer;
     EditText searchText;
     MainActivity activity;
     private String[] categories;
@@ -34,8 +33,6 @@ public class ToolbarManager {
 
     private void mapComponents() {
         filterSpinner = activity.findViewById(R.id.filterSpinner);
-        ivSearch = activity.findViewById(R.id.searchIcon);
-        searchContainer = activity.findViewById(R.id.searchContainer);
         searchText = activity.findViewById(R.id.searchEditText);
     }
 
