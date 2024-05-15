@@ -1,12 +1,12 @@
 package com.example.todolist_mobile_app.Recycler;
 
-import android.content.Context;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist_mobile_app.Category;
+import com.example.todolist_mobile_app.Enums.Categories;
+import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Database.DatabaseManager;
 import com.example.todolist_mobile_app.MainActivity;
 import com.example.todolist_mobile_app.R;
@@ -22,14 +22,13 @@ public class RecyclerViewManager {
 
     public RecyclerViewManager(MainActivity activity) {
         this.activity = activity;
-        DatabaseManager.getAll(list -> {
-            tasks = list;
-            recyclerView = activity.findViewById(R.id.recyclerView);
-            adapter = new TaskListAdapter(tasks, activity.getApplication());
-            recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-            recyclerView.setAdapter(adapter);
-        });
-//        tasks = getExampleData();
+        recyclerView = activity.findViewById(R.id.recyclerView);
+
+        tasks = DatabaseManager.getAll();
+        adapter = new TaskListAdapter(tasks, activity.getApplication());
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView.setAdapter(adapter);
+
         prepareFloatingActionButton();
     }
 
@@ -42,12 +41,18 @@ public class RecyclerViewManager {
         });
     }
 
+    public void getDataFromDB() {
+        tasks = DatabaseManager.getAll();
+        adapter.setTasks(tasks);
+        adapter.notifyDataSetChanged();
+    }
+
     private List<TaskData> getExampleData() {
         List<TaskData> data = new ArrayList<>();
-        data.add(new TaskData("Test1", "Description", false, Category.Home));
-        data.add(new TaskData("TESTUJEMY", "Description 1245521", true, Category.Recreation));
-        data.add(new TaskData("DLUGI DLUGI TEKST", "Descrip", false, Category.Other));
-        data.add(new TaskData("Zadanie", "Description dapsodkap", true, Category.Health));
+        data.add(new TaskData("Test1", "Description", false, Categories.Home));
+        data.add(new TaskData("TESTUJEMY", "Description 1245521", true, Categories.Recreation));
+        data.add(new TaskData("DLUGI DLUGI TEKST", "Descrip", false, Categories.Other));
+        data.add(new TaskData("Zadanie", "Description dapsodkap", true, Categories.Health));
 
         return data;
     }

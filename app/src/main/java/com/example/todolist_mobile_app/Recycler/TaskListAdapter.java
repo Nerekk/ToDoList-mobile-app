@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Dialogs.DialogInfo;
 import com.example.todolist_mobile_app.R;
 
@@ -22,6 +23,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     public TaskListAdapter(List<TaskData> tasks, Context context) {
         this.tasks = tasks;
         this.context = context;
+    }
+
+    public void setTasks(List<TaskData> tasks) {
+        this.tasks = tasks;
     }
 
     @NonNull

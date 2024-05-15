@@ -2,9 +2,13 @@ package com.example.todolist_mobile_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.todolist_mobile_app.AddingActivity.AddTaskActivity;
@@ -23,9 +27,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = DatabaseManager.initDatabase(this);
-        new RecyclerViewManager(this);
+        rvManager = new RecyclerViewManager(this);
 
         findViewById(R.id.fab).setOnClickListener(this::goToAddTaskActivity);
+        Log.i("ONCREATE", "ONCREATE");
     }
 
     public void goToAddTaskActivity(View view) {
@@ -33,5 +38,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        rvManager.getDataFromDB();
+        Log.i("ONRESUME", "ONRESUME");
+
+    }
 
 }
