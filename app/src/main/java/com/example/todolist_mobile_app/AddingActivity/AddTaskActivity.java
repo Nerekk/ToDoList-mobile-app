@@ -34,7 +34,7 @@ public class AddTaskActivity extends AppCompatActivity {
     EditText addTitle, addDesc, timeText, dateText;
     Spinner spinnerCategory, spinnerNotifs;
     ArrayAdapter<String> catAdapter, notifAdapter;
-    ImageView ivClock, ivCalendar;
+    ImageView ivClock, ivCalendar, ivBack, ivSave;
     private int hour, minute;
     DatePickerDialog datePickerDialog;
     MaterialButtonToggleGroup toggleGroup;
@@ -57,8 +57,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
 
     private void mapComponents() {
-        findViewById(R.id.addTaskButton).setOnClickListener(this::saveTaskAndReturn);
-
         addTitle = findViewById(R.id.addTitle);
         addDesc = findViewById(R.id.addDesc);
         timeText = findViewById(R.id.timeText);
@@ -74,6 +72,9 @@ public class AddTaskActivity extends AppCompatActivity {
         button1 = findViewById(R.id.button1);
         button1.setChecked(true);
         button2 = findViewById(R.id.button2);
+
+        ivBack = findViewById(R.id.backIcon);
+        ivSave = findViewById(R.id.doneIcon);
     }
 
     private void setSpinners() {
@@ -137,6 +138,9 @@ public class AddTaskActivity extends AppCompatActivity {
                 button1.setChecked(false);
             }
         });
+
+        ivBack.setOnClickListener(view -> finish());
+        ivSave.setOnClickListener(this::saveTaskAndReturn);
     }
 
     private void fillCategories() {

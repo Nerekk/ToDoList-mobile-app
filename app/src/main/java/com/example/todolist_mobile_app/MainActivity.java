@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.todolist_mobile_app.AddingActivity.AddTaskActivity;
 import com.example.todolist_mobile_app.Database.DatabaseManager;
@@ -30,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
         rvManager = new RecyclerViewManager(this);
 
         findViewById(R.id.fab).setOnClickListener(this::goToAddTaskActivity);
+
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         Log.i("ONCREATE", "ONCREATE");
     }
 
@@ -45,5 +52,13 @@ public class MainActivity extends AppCompatActivity {
         Log.i("ONRESUME", "ONRESUME");
 
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.appbar_menu_main, menu);
+//        return true;
+//    }
+
 
 }
