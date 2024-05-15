@@ -2,18 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- "Mark Favorite", must appear as action button if possible. -->
     <item
-        android:id="@+id/action_filter"
+        android:id="@+id/filterMenu"
         android:icon="@drawable/ic_filter_list_48"
         android:title="Filter"
-        app:actionViewClass="android.widget.Spinner"
-        app:showAsAction="ifRoom" />
-
-    <!-- Settings, must always be in the overflow. -->
-    <item android:id="@+id/action_search"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.Spinner" />
+    <item
+        android:id="@+id/searchView"
         android:icon="@drawable/ic_search_48"
         android:title="Search"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
 </menu>

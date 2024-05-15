@@ -12,8 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.todolist_mobile_app.Enums.Categories;
 
 public class ToolbarManager {
-    Spinner filterSpinner;
-    EditText searchText;
+//    Spinner filterSpinner;
     MainActivity activity;
     private String[] categories;
     private CustomSpinnerAdapter catAdapter;
@@ -32,14 +31,13 @@ public class ToolbarManager {
 
 
     private void mapComponents() {
-        filterSpinner = activity.findViewById(R.id.filterSpinner);
-        searchText = activity.findViewById(R.id.searchEditText);
+//        filterSpinner = activity.findViewById(R.id.filterSpinner);
     }
 
     private void setSpinner() {
         categories = Categories.fillCategories(true);
         catAdapter = new CustomSpinnerAdapter(activity, R.layout.spinner_item_filter, categories);
-        filterSpinner.setAdapter(catAdapter);
+//        filterSpinner.setAdapter(catAdapter);
     }
 
     private void setListeners() {
