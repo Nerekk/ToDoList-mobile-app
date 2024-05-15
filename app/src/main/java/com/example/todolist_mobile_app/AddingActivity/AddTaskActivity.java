@@ -21,6 +21,8 @@ import com.example.todolist_mobile_app.Database.TaskDatabase;
 import com.example.todolist_mobile_app.Enums.Notifications;
 import com.example.todolist_mobile_app.R;
 import com.example.todolist_mobile_app.Data.TaskData;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +37,8 @@ public class AddTaskActivity extends AppCompatActivity {
     ImageView ivClock, ivCalendar;
     private int hour, minute;
     DatePickerDialog datePickerDialog;
+    MaterialButtonToggleGroup toggleGroup;
+    MaterialButton button1, button2;
 
     private String[] categories;
     private String[] notifications;
@@ -65,6 +69,11 @@ public class AddTaskActivity extends AppCompatActivity {
 
         ivClock = findViewById(R.id.ivClock);
         ivCalendar = findViewById(R.id.ivCalendar);
+
+        toggleGroup = findViewById(R.id.toggleButton);
+        button1 = findViewById(R.id.button1);
+        button1.setChecked(true);
+        button2 = findViewById(R.id.button2);
     }
 
     private void setSpinners() {
@@ -120,6 +129,14 @@ public class AddTaskActivity extends AppCompatActivity {
     private void setListeners() {
         ivClock.setOnClickListener(view -> showTimePicker());
         ivCalendar.setOnClickListener(view -> showDatePicker());
+
+        toggleGroup.addOnButtonCheckedListener((materialButtonToggleGroup, checkedId, isChecked) -> {
+            if (checkedId == R.id.button1) {
+                button2.setChecked(false);
+            } else if (checkedId == R.id.button2) {
+                button1.setChecked(false);
+            }
+        });
     }
 
     private void fillCategories() {
@@ -149,6 +166,11 @@ public class AddTaskActivity extends AppCompatActivity {
         // saving
         setResult(1);
         finish();
+    }
+
+    private boolean getStatus() {
+        int checkedId = toggleGroup.getCheckedButtonId();
+        return checkedId == R.id.button2;
     }
 
     private TaskData createNewTask() {
