@@ -19,11 +19,12 @@ public class RecyclerViewManager {
     RecyclerView recyclerView;
     TaskListAdapter adapter;
     MainActivity activity;
+    private String lastQuery;
 
     public RecyclerViewManager(MainActivity activity) {
         this.activity = activity;
         recyclerView = activity.findViewById(R.id.recyclerView);
-
+        this.lastQuery = "";
         tasks = DatabaseManager.getAll();
         adapter = new TaskListAdapter(tasks, activity.getApplication());
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -45,6 +46,14 @@ public class RecyclerViewManager {
         tasks = DatabaseManager.getAll();
         adapter.setTasks(tasks);
         adapter.notifyDataSetChanged();
+    }
+
+    public void setLastQuery(String lastQuery) {
+        this.lastQuery = lastQuery;
+    }
+
+    public void filterData(String category) {
+        adapter.filter(category, lastQuery);
     }
 
     private List<TaskData> getExampleData() {

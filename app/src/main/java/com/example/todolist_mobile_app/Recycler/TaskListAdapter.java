@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Dialogs.DialogInfo;
+import com.example.todolist_mobile_app.Enums.Categories;
 import com.example.todolist_mobile_app.R;
 
 import java.util.List;
@@ -17,16 +18,18 @@ import java.util.Objects;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     List<TaskData> tasks;
+    List<TaskData> originalTasks;
     Context context;
 
 
     public TaskListAdapter(List<TaskData> tasks, Context context) {
         this.tasks = tasks;
+        this.originalTasks = tasks;
         this.context = context;
     }
 
     public void setTasks(List<TaskData> tasks) {
-        this.tasks = tasks;
+        this.originalTasks = tasks;
     }
 
     @NonNull
@@ -70,5 +73,23 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     @Override
     public int getItemCount() {
         return tasks.size();
+    }
+
+    public void filter(String category, String query) {
+        tasks.clear();
+        for (TaskData data : originalTasks) {
+            if (category.equalsIgnoreCase("all")) {
+                if (data.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                    tasks.add(data);
+                }
+            } else {
+                String c = data.getCategory().toString();
+                if (c.equalsIgnoreCase(category) && data.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                    tasks.add(data);
+                }
+            }
+
+        }
+        notifyDataSetChanged();
     }
 }
