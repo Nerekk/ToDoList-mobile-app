@@ -15,10 +15,12 @@ import android.widget.TimePicker;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.todolist_mobile_app.Category;
+import com.example.todolist_mobile_app.Enums.Categories;
 import com.example.todolist_mobile_app.Database.DatabaseManager;
 import com.example.todolist_mobile_app.Database.TaskDatabase;
+import com.example.todolist_mobile_app.Enums.Notifications;
 import com.example.todolist_mobile_app.R;
+import com.example.todolist_mobile_app.Data.TaskData;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +37,7 @@ public class AddTaskActivity extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
 
     private String[] categories;
-    private String[] notifications = {"Off", "1 minute", "5 minutes", "15 minutes", "1 hour"};
+    private String[] notifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
     private void setSpinners() {
         fillCategories();
+        fillNotifications();
         catAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, categories);
 //        catAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         notifAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, notifications);
@@ -120,16 +123,38 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     private void fillCategories() {
-        Category[] c = Category.values();
+        Categories[] c = Categories.values();
         categories = new String[c.length];
         for (int i = 0; i < c.length; i++) {
             categories[i] = c[i].toString();
         }
     }
 
+    private void fillNotifications() {
+        Notifications[] n = Notifications.values();
+        notifications = new String[n.length];
+        for (int i = 0; i < n.length; i++) {
+            if (n[i].getValue() == 0) {
+                notifications[i] = "Off";
+                continue;
+            }
+            notifications[i] = n[i].getValue() + " minutes";
+        }
+    }
+
 
     public void saveTaskAndReturn(View view) {
+        TaskData newTask = createNewTask();
+        DatabaseManager.insert(newTask);
         // saving
+        setResult(1);
         finish();
+    }
+
+    private TaskData createNewTask() {
+        Categories c = Categories.fromString(spinnerCategory.getSelectedItem().toString());
+//        Notifications n = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString());
+        TaskData task = new TaskData(addTitle.getText().toString(), addDesc.getText().toString(), false, c);
+        return task;
     }
 }
