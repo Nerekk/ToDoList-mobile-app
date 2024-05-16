@@ -6,4 +6,5 @@
     <color name="color_secondary">#002B80</color>
     <color name="color_additional">#5E80E6</color>
     <color name="color_accent">#EA46DA</color>
+    <color name="color_swipe">#FF5258</color>
 </resources>

@@ -1,8 +1,12 @@
 package com.example.todolist_mobile_app.Recycler;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,6 +64,39 @@ public class RecyclerViewManager {
                 Toast.makeText(activity, "Task deleted", Toast.LENGTH_SHORT).show();
                 DatabaseManager.deleteById(((TaskViewHolder)viewHolder).getTaskId());
                 getDataFromDBAndUpdateAdapter();
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    View itemView = viewHolder.itemView;
+
+                    Paint paint = new Paint();
+                    paint.setColor(ContextCompat.getColor(activity, R.color.color_swipe)); // Replace with your desired color
+
+                    if (dX < 0) {
+                        c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
+                                (float) itemView.getRight(), (float) itemView.getBottom(), paint);
+                    }
+
+                     Drawable deleteIcon = ContextCompat.getDrawable(activity, R.drawable.ic_delete_48_white); // Your delete icon
+                     int iconMargin = (itemView.getHeight() - deleteIcon.getIntrinsicHeight()) / 2;
+                     int iconTop = itemView.getTop() + (itemView.getHeight() - deleteIcon.getIntrinsicHeight()) / 2;
+                     int iconBottom = iconTop + deleteIcon.getIntrinsicHeight();
+                     if (dX < 0) {
+                         int iconLeft = itemView.getRight() - iconMargin - deleteIcon.getIntrinsicWidth();
+                         int iconRight = itemView.getRight() - iconMargin;
+                         deleteIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+                         deleteIcon.draw(c);
+                     } else if (dX > 0) {
+                         int iconLeft = itemView.getLeft() + iconMargin;
+                         int iconRight = itemView.getLeft() + iconMargin + deleteIcon.getIntrinsicWidth();
+                         deleteIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+                         deleteIcon.draw(c);
+                     }
+                }
             }
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
