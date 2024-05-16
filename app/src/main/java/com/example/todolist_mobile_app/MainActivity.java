@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         rvManager.getDataFromDB();
-        Log.i("ONRESUME", "ONRESUME");
     }
 
     @Override
@@ -104,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String selectedCategory = (String) adapterView.getItemAtPosition(position);
+                rvManager.setLastCategory(selectedCategory);
                 rvManager.filterData(selectedCategory);
             }
 

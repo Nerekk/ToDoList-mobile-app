@@ -20,11 +20,13 @@ public class RecyclerViewManager {
     TaskListAdapter adapter;
     MainActivity activity;
     private String lastQuery;
+    private String lastCategory;
 
     public RecyclerViewManager(MainActivity activity) {
         this.activity = activity;
         recyclerView = activity.findViewById(R.id.recyclerView);
         this.lastQuery = "";
+        this.lastCategory = "All";
         tasks = DatabaseManager.getAll();
         adapter = new TaskListAdapter(tasks, activity.getApplication());
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
@@ -45,24 +47,19 @@ public class RecyclerViewManager {
     public void getDataFromDB() {
         tasks = DatabaseManager.getAll();
         adapter.setTasks(tasks);
-        adapter.notifyDataSetChanged();
+        adapter.filter(lastCategory, lastQuery);
     }
 
     public void setLastQuery(String lastQuery) {
         this.lastQuery = lastQuery;
     }
 
+    public void setLastCategory(String lastCategory) {
+        this.lastCategory = lastCategory;
+    }
+
     public void filterData(String category) {
         adapter.filter(category, lastQuery);
     }
 
-    private List<TaskData> getExampleData() {
-        List<TaskData> data = new ArrayList<>();
-        data.add(new TaskData("Test1", "Description", false, Categories.Home));
-        data.add(new TaskData("TESTUJEMY", "Description 1245521", true, Categories.Recreation));
-        data.add(new TaskData("DLUGI DLUGI TEKST", "Descrip", false, Categories.Other));
-        data.add(new TaskData("Zadanie", "Description dapsodkap", true, Categories.Health));
-
-        return data;
-    }
 }
