@@ -41,6 +41,14 @@ public class DatabaseManager {
         });
     }
 
+    public static synchronized void deleteById(int taskId) {
+
+        if (database == null) return;
+        TaskDataDao dao = database.taskDataDao();
+        dao.deleteTaskById(taskId);
+
+    }
+
 
     public static synchronized List<TaskData> getAll() {
         if (database == null) return null;
