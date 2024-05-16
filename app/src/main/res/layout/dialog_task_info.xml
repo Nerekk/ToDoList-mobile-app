@@ -71,8 +71,8 @@
             android:id="@+id/ivEdit"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="@+id/guideline7"
             app:srcCompat="@mipmap/ic_edit" />
 
         <ImageView
