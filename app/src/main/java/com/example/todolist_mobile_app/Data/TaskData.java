@@ -1,9 +1,12 @@
 package com.example.todolist_mobile_app.Data;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.todolist_mobile_app.Enums.Categories;
+import com.example.todolist_mobile_app.Enums.Notifications;
+import com.example.todolist_mobile_app.Utils.DateFormatter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,14 +20,16 @@ public class TaskData {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private boolean isFinished;
-    private boolean isNotifyOn;
+    private Notifications notification;
     private Categories category;
     // one more field for files/images
 
 
     public final static String DONE = "Done";
     public final static String INCOMPLETE = "Incomplete";
+    public final static String ID = "taskId";
 
+    @Ignore
     public TaskData(String title, String description, boolean isFinished, Categories category) {
         this.title = title;
         this.description = description;
@@ -32,7 +37,22 @@ public class TaskData {
         this.category = category;
 
         this.startTime = LocalDateTime.now();
-        this.isNotifyOn = false;
+        this.notification = Notifications.OFF;
+    }
+
+    public TaskData(String title,
+                    String description,
+                    LocalDateTime endTime,
+                    boolean isFinished,
+                    Notifications notification,
+                    Categories category) {
+        this.title = title;
+        this.description = description;
+        this.startTime = LocalDateTime.now();
+        this.endTime = endTime;
+        this.isFinished = isFinished;
+        this.notification = notification;
+        this.category = category;
     }
 
     public int getId() {
@@ -83,12 +103,12 @@ public class TaskData {
         isFinished = finished;
     }
 
-    public boolean isNotifyOn() {
-        return isNotifyOn;
+    public Notifications getNotification() {
+        return notification;
     }
 
-    public void setNotifyOn(boolean notifyOn) {
-        isNotifyOn = notifyOn;
+    public void setNotification(Notifications notification) {
+        this.notification = notification;
     }
 
     public Categories getCategory() {
@@ -99,16 +119,30 @@ public class TaskData {
         this.category = category;
     }
 
-    public String getStartTimeFormatted() {
-        if (startTime == null) return "None";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return startTime.format(formatter);
-    }
+//    public String getStartTimeFormatted() {
+//        if (startTime == null) return "None";
+//        return DateFormatter.getFullFormatToString(startTime);
+//    }
+//
+//    public String getFullEndTimeFormatted() {
+//        if (endTime == null) return "None";
+//        return DateFormatter.getFullFormatToString(endTime);
+//    }
+//
+//    public String getEndTimeFormatted() {
+//        if (endTime == null) return "None";
+//        return DateFormatter.getTimeFormatToString(endTime);
+//    }
+//
+//    public String getEndDateFormatted() {
+//        if (endTime == null) return "None";
+//        return DateFormatter.getDateFormatToString(endTime);
+//    }
 
-    public String getEndTimeFormatted() {
-        if (endTime == null) return "None";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return endTime.format(formatter);
+    public LocalDateTime setEndTimeFromString(String date, String time) {
+        String dateTimeString = date + " " + time;
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(dateTimeString, dateTimeFormatter);
     }
 
     public String getStatus() {
@@ -120,11 +154,7 @@ public class TaskData {
     }
 
     public String getNotificationStatus() {
-        if (isNotifyOn) {
-            return "On";
-        } else {
-            return "Off";
-        }
+        return Notifications.getStringNotification(notification);
     }
 
     @Override
