@@ -1,6 +1,7 @@
 package com.example.todolist_mobile_app.Recycler;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Dialogs.DialogInfo;
 import com.example.todolist_mobile_app.Enums.Categories;
 import com.example.todolist_mobile_app.R;
+import com.example.todolist_mobile_app.Utils.DateFormatter;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +49,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         int index = holder.getAdapterPosition();
 
         holder.taskTitle.setText(tasks.get(position).getTitle());
-        holder.taskDate.setText(tasks.get(position).getStartTimeFormatted());
+        holder.taskDate.setText(DateFormatter.getFullToString(tasks.get(position).getStartTime()));
         holder.taskCategory.setText(tasks.get(position).getCategory().toString());
         if (Objects.equals(tasks.get(position).getStatus(), TaskData.DONE)) {
             holder.taskStatus.setImageResource(R.mipmap.ic_done);
@@ -55,18 +57,15 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             holder.taskStatus.setImageResource(R.mipmap.ic_incomplete);
         }
 
-        if (tasks.get(position).isNotifyOn()) {
+        if (tasks.get(position).getNotification().getValue() != 0) {
             holder.taskNotification.setImageResource(R.mipmap.ic_notifications_on);
         } else {
             holder.taskNotification.setImageResource(R.mipmap.ic_notifications_off);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TaskData task = tasks.get(index);
-                new DialogInfo(context, TaskListAdapter.this, task);
-            }
+        holder.itemView.setOnClickListener(view -> {
+            TaskData task = tasks.get(index);
+            new DialogInfo(context, TaskListAdapter.this, task);
         });
     }
 
@@ -79,7 +78,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         tasks.clear();
         for (TaskData data : originalTasks) {
             if (category.equalsIgnoreCase("all")) {
-                if (data.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                if (query.isEmpty() || data.getTitle().toLowerCase().contains(query.toLowerCase())) {
                     tasks.add(data);
                 }
             } else {
