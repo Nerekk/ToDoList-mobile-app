@@ -3,7 +3,9 @@ package com.example.todolist_mobile_app.AddingActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +24,12 @@ import com.example.todolist_mobile_app.Database.TaskDatabase;
 import com.example.todolist_mobile_app.Enums.Notifications;
 import com.example.todolist_mobile_app.R;
 import com.example.todolist_mobile_app.Data.TaskData;
+import com.example.todolist_mobile_app.Utils.DateFormatter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
@@ -39,6 +44,8 @@ public class AddTaskActivity extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
     MaterialButtonToggleGroup toggleGroup;
     MaterialButton button1, button2;
+    private TaskData editTask;
+    private int taskId;
 
     private String[] categories;
     private String[] notifications;
@@ -53,14 +60,49 @@ public class AddTaskActivity extends AppCompatActivity {
         mapComponents();
         setSpinners();
         setListeners();
+
+        fillDataIfSent();
+    }
+
+    private void fillDataIfSent() {
+        Intent intent = getIntent();
+        taskId = intent.getIntExtra(TaskData.ID, -1);
+
+        if (taskId != -1) {
+            fillActivity(DatabaseManager.getTaskById(taskId));
+        }
+    }
+
+    private void fillActivity(TaskData task) {
+        editTask = task;
+
+        addTitle.setText(task.getTitle());
+        addDesc.setText(task.getDescription());
+        timeText.setText(DateFormatter.getTimeToString(task.getEndTime()));
+        dateText.setText(DateFormatter.getDateToString(task.getEndTime()));
+
+        spinnerCategory.setSelection(task.getCategory().ordinal());
+        spinnerNotifs.setSelection(task.getNotification().getIndex());
+
+        if (task.isFinished()) {
+            button1.setChecked(false);
+            button2.setChecked(true);
+        } else {
+            button1.setChecked(true);
+            button2.setChecked(false);
+        }
     }
 
 
     private void mapComponents() {
         addTitle = findViewById(R.id.addTitle);
         addDesc = findViewById(R.id.addDesc);
+
         timeText = findViewById(R.id.timeText);
+        timeText.setText(DateFormatter.getTimeToString(LocalDateTime.now()));
+
         dateText = findViewById(R.id.dateText);
+        dateText.setText(DateFormatter.getDateToString(LocalDateTime.now()));
 
         spinnerCategory = findViewById(R.id.spinnerCategory);
         spinnerNotifs = findViewById(R.id.spinnerNotifs);
@@ -79,7 +121,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
     private void setSpinners() {
         categories = Categories.fillCategories(false);
-        fillNotifications();
+        notifications = Notifications.fillNotifications();
         catAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, categories);
 //        catAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         notifAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, notifications);
@@ -96,7 +138,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 month++;
 
                 LocalDate date = LocalDate.of(year, month, day);
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 String formattedDate = date.format(formatter);
                 dateText.setText(formattedDate);
             }
@@ -143,30 +185,26 @@ public class AddTaskActivity extends AppCompatActivity {
         ivSave.setOnClickListener(this::saveTaskAndReturn);
     }
 
-    private void fillCategories(boolean allFlag) {
-        Categories[] c = Categories.values();
-        categories = new String[c.length];
-        for (int i = 0; i < c.length; i++) {
-            categories[i] = c[i].toString();
-        }
-    }
-
-    private void fillNotifications() {
-        Notifications[] n = Notifications.values();
-        notifications = new String[n.length];
-        for (int i = 0; i < n.length; i++) {
-            if (n[i].getValue() == 0) {
-                notifications[i] = "Off";
-                continue;
-            }
-            notifications[i] = n[i].getValue() + " minutes";
-        }
-    }
-
 
     public void saveTaskAndReturn(View view) {
-        TaskData newTask = createNewTask();
-        DatabaseManager.insert(newTask);
+        if (taskId == -1) {
+            TaskData newTask = createNewTask();
+            if (newTask == null) {
+                Toast.makeText(this, "All fields must be filled!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Log.i("DB_INSERT", "Inserting");
+            DatabaseManager.insert(newTask);
+        } else {
+            if (!updateTask(editTask)) {
+                Toast.makeText(this, "All fields must be filled!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Log.i("DB_INSERT", "Inserting");
+            DatabaseManager.insert(editTask);
+        }
+//        TaskData newTask = createNewTask();
+//        DatabaseManager.insert(newTask);
         // saving
         setResult(1);
         finish();
@@ -178,9 +216,39 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     private TaskData createNewTask() {
+        String title = addTitle.getText().toString();
+        String desc = addDesc.getText().toString();
+        String time = timeText.getText().toString();
+        String date = dateText.getText().toString();
+        if (title.isEmpty() || desc.isEmpty() || time.isEmpty() || date.isEmpty()) return null;
+
         Categories c = Categories.fromString(spinnerCategory.getSelectedItem().toString());
-//        Notifications n = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString());
-        TaskData task = new TaskData(addTitle.getText().toString(), addDesc.getText().toString(), false, c);
-        return task;
+        Notifications n = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString());
+        boolean isFinished = button2.isChecked();
+        LocalDateTime endtime = DateFormatter.getFullToClass(date, time);
+
+
+        return new TaskData(title, desc, endtime, isFinished, n, c);
+    }
+
+    private boolean updateTask(TaskData task) {
+        String title = addTitle.getText().toString();
+        String desc = addDesc.getText().toString();
+        String time = timeText.getText().toString();
+        String date = dateText.getText().toString();
+        if (title.isEmpty() || desc.isEmpty() || time.isEmpty() || date.isEmpty()) return false;
+
+        Categories c = Categories.fromString(spinnerCategory.getSelectedItem().toString());
+        Notifications n = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString());
+        boolean isFinished = button2.isChecked();
+        LocalDateTime endtime = DateFormatter.getFullToClass(date, time);
+
+        task.setTitle(title);
+        task.setDescription(desc);
+        task.setCategory(c);
+        task.setNotification(n);
+        task.setFinished(isFinished);
+        task.setEndTime(endtime);
+        return true;
     }
 }
