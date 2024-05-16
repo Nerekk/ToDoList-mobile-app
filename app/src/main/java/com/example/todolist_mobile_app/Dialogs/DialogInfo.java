@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,9 +45,15 @@ public class DialogInfo extends Dialog {
         ((TextView)findViewById(R.id.dialogNotifs)).setText(task.getNotificationStatus());
         ((TextView)findViewById(R.id.dialogEnd)).setText(DateFormatter.getFullToString(task.getEndTime()));
         ((TextView)findViewById(R.id.dialogStart)).setText(DateFormatter.getFullToString(task.getStartTime()));
+
     }
 
     private void setListeners() {
+        findViewById(R.id.dialogInfoBackground).setOnClickListener(view -> dismiss());
+
+        // empty listener to override background dismiss
+        findViewById(R.id.dialogInfoView).setOnClickListener(view -> {});
+
         ivEdit = findViewById(R.id.ivEdit);
         ivEdit.setOnClickListener(view -> {
             Intent intent = new Intent(context, AddTaskActivity.class);
