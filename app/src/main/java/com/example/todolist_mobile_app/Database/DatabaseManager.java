@@ -41,19 +41,16 @@ public class DatabaseManager {
         });
     }
 
-//    public static synchronized void getAll(DataCallback callback) {
-//        executor.execute(() -> {
-//            if (database == null) return;
-//            TaskDataDao dao = database.taskDataDao();
-//            List<TaskData> tasks = dao.getAll();
-//            callback.onDataLoaded(tasks);
-//        });
-//    }
 
     public static synchronized List<TaskData> getAll() {
         if (database == null) return null;
         TaskDataDao dao = database.taskDataDao();
         return dao.getAll();
-//        callback.onDataLoaded(tasks);
+    }
+
+    public static synchronized TaskData getTaskById(int id) {
+        if (database == null) return null;
+        TaskDataDao dao = database.taskDataDao();
+        return dao.getTaskById(id);
     }
 }
