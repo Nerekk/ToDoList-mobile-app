@@ -9,11 +9,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
+
 
 import com.example.todolist_mobile_app.AddingActivity.AddTaskActivity;
 import com.example.todolist_mobile_app.Database.DatabaseManager;
@@ -22,11 +23,10 @@ import com.example.todolist_mobile_app.Enums.Categories;
 import com.example.todolist_mobile_app.Recycler.RecyclerViewManager;
 
 public class MainActivity extends AppCompatActivity {
-    public TaskDatabase db;
-    public RecyclerViewManager rvManager;
+    private TaskDatabase db;
+    private RecyclerViewManager rvManager;
+    private ToolbarManager toolbarManager;
 
-    Spinner menuSpinner;
-    SearchView menuSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.fab).setOnClickListener(this::goToAddTaskActivity);
 
-        new ToolbarManager(this);
+        toolbarManager = new ToolbarManager(this, rvManager);
         Log.i("ONCREATE", "ONCREATE");
     }
 
@@ -53,66 +53,4 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         rvManager.getDataFromDBAndUpdateAdapter();
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.appbar_menu_main, menu);
-
-        MenuItem item = menu.findItem(R.id.filterMenu);
-        menuSpinner = (Spinner) item.getActionView();
-
-        MenuItem item2 = menu.findItem(R.id.searchView);
-        menuSearch = (SearchView) item2.getActionView();
-
-
-        prepSpinnerFilter(menuSpinner);
-
-
-        prepSearchViewFilter(menuSearch, menuSpinner);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    private void prepSearchViewFilter(SearchView searchView, Spinner spinner) {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                rvManager.setLastQuery(newText);
-                rvManager.filterData(spinner.getSelectedItem().toString());
-                return false;
-            }
-        });
-    }
-
-    private void prepSpinnerFilter(Spinner spinner) {
-        String[] c = Categories.fillCategories(true);
-        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(this, R.layout.spinner_item_filter, c);
-        spinner.setAdapter(adapter);
-
-        GradientDrawable gd = new GradientDrawable();
-        gd.setColor(getResources().getColor(R.color.color_additional));
-        gd.setCornerRadius(20);
-        spinner.setBackground(gd);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                String selectedCategory = (String) adapterView.getItemAtPosition(position);
-                rvManager.setLastCategory(selectedCategory);
-                rvManager.filterData(selectedCategory);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
-
-
 }

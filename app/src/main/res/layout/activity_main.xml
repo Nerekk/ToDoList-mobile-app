@@ -23,15 +23,22 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
-<!--        <Spinner-->
-<!--            android:id="@+id/filterSpinner"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="start"-->
-<!--            android:gravity="center"-->
-<!--            tools:layout_editor_absoluteX="10dp"-->
-<!--            tools:layout_editor_absoluteY="20dp" />-->
+        <Spinner
+            android:id="@+id/filterMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:gravity="start"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="20dp" />
 
+        <SearchView
+            android:id="@+id/action_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:searchIcon="@mipmap/ic_search"
+            android:layout_gravity="end"
+            android:theme="@style/search_view_style"/>
 
     </androidx.appcompat.widget.Toolbar>
 

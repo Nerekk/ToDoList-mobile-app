@@ -11,4 +11,10 @@
         <item name="cornerFamily">rounded</item>
         <item name="android:radius">40dp</item>
     </style>
+
+    <style name="search_view_style" parent="Widget.AppCompat.SearchView">
+        <item name="android:tint">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:editTextColor">@color/white</item>
+    </style>
 </resources>
