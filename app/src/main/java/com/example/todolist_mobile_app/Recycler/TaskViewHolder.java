@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.todolist_mobile_app.R;
 
 public class TaskViewHolder extends RecyclerView.ViewHolder {
+    private int taskId;
     TextView taskCategory, taskTitle, taskDate;
     ImageView taskStatus, taskNotification;
 
@@ -22,6 +23,14 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
         taskStatus = itemView.findViewById(R.id.taskStatus);
         taskNotification = itemView.findViewById(R.id.taskNotification);
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 
     public TextView getTaskCategory() {

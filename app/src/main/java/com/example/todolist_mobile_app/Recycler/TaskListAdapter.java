@@ -48,6 +48,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         int index = holder.getAdapterPosition();
 
+        holder.setTaskId(tasks.get(position).getId());
+
         holder.taskTitle.setText(tasks.get(position).getTitle());
         holder.taskDate.setText(DateFormatter.getFullToString(tasks.get(position).getStartTime()));
         holder.taskCategory.setText(tasks.get(position).getCategory().toString());
