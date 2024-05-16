@@ -28,6 +28,35 @@ public enum Notifications {
         throw new IllegalArgumentException("No enum constant with value " + value);
     }
 
+    public static String getStringNotification(Notifications notifications) {
+        int v = notifications.getValue();
+        if (v == 0) return "Off";
+        return v + "minutes";
+    }
+
+    public int getIndex() {
+        Notifications[] values = Notifications.values();
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] == this) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static String[] fillNotifications() {
+        Notifications[] n = Notifications.values();
+        String[] notifications = new String[n.length];
+        for (int i = 0; i < n.length; i++) {
+            if (n[i].getValue() == 0) {
+                notifications[i] = "Off";
+                continue;
+            }
+            notifications[i] = n[i].getValue() + " minutes";
+        }
+        return notifications;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(value);
