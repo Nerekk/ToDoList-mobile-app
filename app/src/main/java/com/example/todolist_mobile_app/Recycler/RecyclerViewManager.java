@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Database.DatabaseManager;
+import com.example.todolist_mobile_app.Enums.OrderType;
+import com.example.todolist_mobile_app.Enums.TaskStatus;
 import com.example.todolist_mobile_app.MainActivity;
 import com.example.todolist_mobile_app.R;
 
@@ -24,13 +26,15 @@ public class RecyclerViewManager {
     TaskListAdapter adapter;
     MainActivity activity;
     private String lastQuery;
-    private String lastCategory;
+    private String lastCategory, lastTaskStatus, lastOrderType;
 
     public RecyclerViewManager(MainActivity activity) {
         this.activity = activity;
         recyclerView = activity.findViewById(R.id.recyclerView);
         this.lastQuery = "";
         this.lastCategory = "All";
+        this.lastTaskStatus = TaskStatus.All.toString();
+        this.lastOrderType = OrderType.Closest.toString();
         tasks = DatabaseManager.getAll();
         adapter = new TaskListAdapter(tasks, activity.getApplication());
 
@@ -106,7 +110,7 @@ public class RecyclerViewManager {
     public void getDataFromDBAndUpdateAdapter() {
         tasks = DatabaseManager.getAll();
         adapter.setTasks(tasks);
-        adapter.filter(lastCategory, lastQuery);
+        adapter.filter(lastCategory, lastQuery, lastTaskStatus, lastOrderType);
     }
 
     public void setLastQuery(String lastQuery) {
@@ -117,8 +121,32 @@ public class RecyclerViewManager {
         this.lastCategory = lastCategory;
     }
 
-    public void filterData(String category) {
-        adapter.filter(category, lastQuery);
+    public void setLastTaskStatus(String lastTaskStatus) {
+        this.lastTaskStatus = lastTaskStatus;
+    }
+
+    public void setLastOrderType(String lastOrderType) {
+        this.lastOrderType = lastOrderType;
+    }
+
+    public void filterDataOnCategoryChange(String category) {
+        setLastCategory(category);
+        adapter.filter(lastCategory, lastQuery, lastTaskStatus, lastOrderType);
+    }
+
+    public void filterDataOnQueryChange(String query) {
+        setLastQuery(query);
+        adapter.filter(lastCategory, lastQuery, lastTaskStatus, lastOrderType);
+    }
+
+    public void filterDataOnTaskStatusChange(String taskType) {
+        setLastTaskStatus(taskType);
+        adapter.filter(lastCategory, lastQuery, lastTaskStatus, lastOrderType);
+    }
+
+    public void filterDataOnOrderChange(String order) {
+        setLastOrderType(order);
+        adapter.filter(lastCategory, lastQuery, lastTaskStatus, lastOrderType);
     }
 
 }

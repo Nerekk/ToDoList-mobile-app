@@ -15,6 +15,7 @@ import com.example.todolist_mobile_app.Enums.Categories;
 import com.example.todolist_mobile_app.R;
 import com.example.todolist_mobile_app.Utils.DateFormatter;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,10 +49,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         int index = holder.getAdapterPosition();
 
+        prepareTaskCard(holder, position, index);
+    }
+
+    private void prepareTaskCard(@NonNull TaskViewHolder holder, int position, int index) {
         holder.setTaskId(tasks.get(position).getId());
 
         holder.taskTitle.setText(tasks.get(position).getTitle());
-        holder.taskDate.setText(DateFormatter.getFullToString(tasks.get(position).getStartTime()));
+        holder.taskDate.setText(DateFormatter.getFullToString(tasks.get(position).getEndTime()));
         holder.taskCategory.setText(tasks.get(position).getCategory().toString());
         if (Objects.equals(tasks.get(position).getStatus(), TaskData.DONE)) {
             holder.taskStatus.setImageResource(R.mipmap.ic_done);
@@ -76,21 +81,29 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         return tasks.size();
     }
 
-    public void filter(String category, String query) {
+    public void filter(String category, String query, String taskStatus, String order) {
         tasks.clear();
-        for (TaskData data : originalTasks) {
-            if (category.equalsIgnoreCase("all")) {
-                if (query.isEmpty() || data.getTitle().toLowerCase().contains(query.toLowerCase())) {
-                    tasks.add(data);
-                }
-            } else {
-                String c = data.getCategory().toString();
-                if (c.equalsIgnoreCase(category) && data.getTitle().toLowerCase().contains(query.toLowerCase())) {
-                    tasks.add(data);
-                }
-            }
 
+        for (TaskData data : originalTasks) {
+            boolean matchesCategory = category.equalsIgnoreCase("all") || data.getCategory().toString().equalsIgnoreCase(category);
+            boolean matchesQuery = query.isEmpty() || data.getTitle().toLowerCase().contains(query.toLowerCase());
+
+            if (matchesCategory && matchesQuery) {
+                tasks.add(data);
+            }
         }
+
+        if (!taskStatus.equalsIgnoreCase("All")) {
+            boolean isFinished = taskStatus.equalsIgnoreCase("Done");
+            tasks.removeIf(task -> task.isFinished() != isFinished);
+        }
+
+        if (order.equalsIgnoreCase("Closest")) {
+            tasks.sort(Comparator.comparing(TaskData::getEndTime));
+        } else if (order.equalsIgnoreCase("Newest")) {
+            tasks.sort(Comparator.comparing(TaskData::getStartTime).reversed());
+        }
+
         notifyDataSetChanged();
     }
 }
