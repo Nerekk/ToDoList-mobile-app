@@ -19,7 +19,7 @@ public interface TaskDataDao {
     TaskData getTaskById(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertTask(TaskData taskData);
+    long insertTask(TaskData taskData);
 
     @Delete
     void deleteTask(TaskData taskData);

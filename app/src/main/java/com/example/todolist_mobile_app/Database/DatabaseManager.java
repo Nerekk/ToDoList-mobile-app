@@ -25,28 +25,22 @@ public class DatabaseManager {
         return database;
     }
 
-    public static synchronized void insert(TaskData data) {
-        executor.execute(() -> {
-            if (database == null) return;
-            TaskDataDao dao = database.taskDataDao();
-            dao.insertTask(data);
-        });
+    public static synchronized long insert(TaskData data) {
+        if (database == null) return -1;
+        TaskDataDao dao = database.taskDataDao();
+        return dao.insertTask(data);
     }
 
     public static synchronized void delete(TaskData data) {
-        executor.execute(() -> {
-            if (database == null) return;
-            TaskDataDao dao = database.taskDataDao();
-            dao.deleteTask(data);
-        });
+        if (database == null) return;
+        TaskDataDao dao = database.taskDataDao();
+        dao.deleteTask(data);
     }
 
     public static synchronized void deleteById(int taskId) {
-
         if (database == null) return;
         TaskDataDao dao = database.taskDataDao();
         dao.deleteTaskById(taskId);
-
     }
 
 
