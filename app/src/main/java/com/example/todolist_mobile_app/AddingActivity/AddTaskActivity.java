@@ -31,6 +31,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -163,8 +164,8 @@ public class AddTaskActivity extends AppCompatActivity {
                 timeText.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
             }
         };
-        int style = AlertDialog.THEME_HOLO_LIGHT;
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, onTimeSetListener, hour, minute, true);
+//        int style = AlertDialog.THEME_HOLO_LIGHT;
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
         timePickerDialog.setTitle("Select time");
         timePickerDialog.show();
     }
@@ -187,27 +188,58 @@ public class AddTaskActivity extends AppCompatActivity {
 
 
     public void saveTaskAndReturn(View view) {
-        if (taskId == -1) {
-            TaskData newTask = createNewTask();
-            if (newTask == null) {
-                Toast.makeText(this, "All fields must be filled!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Log.i("DB_INSERT", "Inserting");
-            DatabaseManager.insert(newTask);
-        } else {
-            if (!updateTask(editTask)) {
-                Toast.makeText(this, "All fields must be filled!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Log.i("DB_INSERT", "Inserting");
-            DatabaseManager.insert(editTask);
+        int notifyTime = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString()).getValue();
+        if (!isEndTimeValid(getDateTimeFromActivity(), notifyTime) && notifyTime!=0) {
+            Toast.makeText(this, "To use notifications, the time cannot be earlier than the present!", Toast.LENGTH_SHORT).show();
+            return;
         }
-//        TaskData newTask = createNewTask();
-//        DatabaseManager.insert(newTask);
-        // saving
-        setResult(1);
+        Intent resultIntent = new Intent();
+
+        if (taskId == -1) {
+            if (handleNewTaskCreation(resultIntent)) return;
+
+        } else {
+            if (handleExistingTaskUpdate(resultIntent)) return;
+        }
+
+
+        setResult(RESULT_OK, resultIntent);
         finish();
+    }
+
+    private boolean handleExistingTaskUpdate(Intent resultIntent) {
+        if (!updateTask(editTask)) {
+            Toast.makeText(this, "All fields must be filled except description!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        Log.i("DB_INSERT", "Inserting");
+        long notifyId = DatabaseManager.insert(editTask);
+        Log.i("MY_TEST", "notifyId: " + notifyId + " N: " + editTask.getNotification());
+        resultIntent.putExtra(TaskData.NOTIFY_ID, (int) notifyId);
+        if (editTask.getNotification() != Notifications.OFF) {
+            resultIntent.putExtra(TaskData.NOTIFY_OPERATION, 1);
+        } else {
+            resultIntent.putExtra(TaskData.NOTIFY_OPERATION, 0);
+        }
+        return false;
+    }
+
+    private boolean handleNewTaskCreation(Intent resultIntent) {
+        TaskData newTask = createNewTask();
+        if (newTask == null) {
+            Toast.makeText(this, "All fields must be filled except description!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        Log.i("DB_INSERT", "Inserting");
+        long notifyId = DatabaseManager.insert(newTask);
+        Log.i("MY_TEST", "notifyId: " + notifyId + " N: " + newTask.getNotification());
+        resultIntent.putExtra(TaskData.NOTIFY_ID, (int) notifyId);
+        if (newTask.getNotification() != Notifications.OFF) {
+            resultIntent.putExtra(TaskData.NOTIFY_OPERATION, 1);
+        } else {
+            resultIntent.putExtra(TaskData.NOTIFY_OPERATION, 0);
+        }
+        return false;
     }
 
     private boolean getStatus() {
@@ -220,7 +252,7 @@ public class AddTaskActivity extends AppCompatActivity {
         String desc = addDesc.getText().toString();
         String time = timeText.getText().toString();
         String date = dateText.getText().toString();
-        if (title.isEmpty() || desc.isEmpty() || time.isEmpty() || date.isEmpty()) return null;
+        if (title.isEmpty() || time.isEmpty() || date.isEmpty()) return null;
 
         Categories c = Categories.fromString(spinnerCategory.getSelectedItem().toString());
         Notifications n = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString());
@@ -231,12 +263,25 @@ public class AddTaskActivity extends AppCompatActivity {
         return new TaskData(title, desc, endtime, isFinished, n, c);
     }
 
+    private LocalDateTime getDateTimeFromActivity() {
+        String time = timeText.getText().toString();
+        String date = dateText.getText().toString();
+        return DateFormatter.getFullToClass(date, time);
+    }
+
+    public static boolean isEndTimeValid(LocalDateTime endTime, int notifyTime) {
+        LocalDateTime now = LocalDateTime.now(); // Aktualny czas
+        LocalDateTime notifyTimeDateTime = endTime.minusMinutes(notifyTime);
+
+        return !notifyTimeDateTime.isBefore(now);
+    }
+
     private boolean updateTask(TaskData task) {
         String title = addTitle.getText().toString();
         String desc = addDesc.getText().toString();
         String time = timeText.getText().toString();
         String date = dateText.getText().toString();
-        if (title.isEmpty() || desc.isEmpty() || time.isEmpty() || date.isEmpty()) return false;
+        if (title.isEmpty() || time.isEmpty() || date.isEmpty()) return false;
 
         Categories c = Categories.fromString(spinnerCategory.getSelectedItem().toString());
         Notifications n = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString());
