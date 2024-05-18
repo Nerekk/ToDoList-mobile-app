@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.ComponentActivity;
 import androidx.annotation.NonNull;
 
 import com.example.todolist_mobile_app.AddingActivity.AddTaskActivity;
@@ -59,7 +60,7 @@ public class DialogInfo extends Dialog {
             Intent intent = new Intent(context, AddTaskActivity.class);
             intent.putExtra(TaskData.ID, task.getId());
             dismiss();
-            context.startActivity(intent);
+            ((ComponentActivity)context).startActivityForResult(intent, 1);
         });
     }
 
