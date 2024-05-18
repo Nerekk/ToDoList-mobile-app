@@ -25,12 +25,13 @@
 
         <Spinner
             android:id="@+id/filterMenu"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:gravity="start"
             tools:layout_editor_absoluteX="10dp"
-            tools:layout_editor_absoluteY="20dp" />
+            tools:layout_editor_absoluteY="20dp"
+            android:background="@drawable/ic_filter_list_48"/>
 
         <SearchView
             android:id="@+id/action_view"

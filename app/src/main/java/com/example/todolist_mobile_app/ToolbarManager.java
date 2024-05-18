@@ -1,5 +1,7 @@
 package com.example.todolist_mobile_app;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -20,6 +23,7 @@ public class ToolbarManager {
     SearchView menuSearch;
     MainActivity activity;
     RecyclerViewManager rvManager;
+    CustomSpinnerAdapter adapter;
 
     public ToolbarManager(MainActivity activity, RecyclerViewManager recyclerViewManager) {
         this.activity = activity;
@@ -59,18 +63,19 @@ public class ToolbarManager {
 
     private void prepSpinnerFilter(Spinner spinner) {
         String[] c = Categories.fillCategories(true);
-        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(activity, R.layout.spinner_item_filter, c);
+        adapter = new CustomSpinnerAdapter(activity, R.layout.spinner_item_filter, c);
         spinner.setAdapter(adapter);
 
-        GradientDrawable gd = new GradientDrawable();
-        gd.setColor(activity.getResources().getColor(R.color.color_additional));
-        gd.setCornerRadius(20);
-        spinner.setBackground(gd);
+//        GradientDrawable gd = new GradientDrawable();
+//        gd.setColor(activity.getResources().getColor(R.color.color_additional));
+//        gd.setCornerRadius(20);
+//        spinner.setBackground(gd);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 String selectedCategory = (String) adapterView.getItemAtPosition(position);
+                adapter.setSelectedItemPosition(position);
                 rvManager.setLastCategory(selectedCategory);
                 rvManager.filterData(selectedCategory);
             }
