@@ -31,7 +31,27 @@
             android:gravity="start"
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="20dp"
-            android:background="@drawable/ic_filter_list_48"/>
+            android:background="@mipmap/ic_task_category"/>
+
+        <Spinner
+            android:id="@+id/filterTaskStatus"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:gravity="start"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="20dp"
+            android:background="@mipmap/ic_task_status"/>
+
+        <Spinner
+            android:id="@+id/filterOrder"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:gravity="start"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="20dp"
+            android:background="@mipmap/ic_task_order"/>
 
         <SearchView
             android:id="@+id/action_view"
