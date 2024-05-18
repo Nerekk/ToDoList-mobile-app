@@ -28,6 +28,8 @@ public class TaskData {
     public final static String DONE = "Done";
     public final static String INCOMPLETE = "Incomplete";
     public final static String ID = "taskId";
+    public final static String NOTIFY_ID = "notifyId";
+    public final static String NOTIFY_OPERATION = "notifyOperation";
 
     @Ignore
     public TaskData(String title, String description, boolean isFinished, Categories category) {
