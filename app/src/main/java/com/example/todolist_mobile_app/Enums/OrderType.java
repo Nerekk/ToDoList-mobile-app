@@ -1,7 +1,7 @@
 package com.example.todolist_mobile_app.Enums;
 
 public enum OrderType {
-    Closest,
+    Upcoming,
     Newest;
 
     public static OrderType fromString(String value) {

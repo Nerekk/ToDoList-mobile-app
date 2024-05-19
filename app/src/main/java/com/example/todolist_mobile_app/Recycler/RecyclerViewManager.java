@@ -34,7 +34,7 @@ public class RecyclerViewManager {
         this.lastQuery = "";
         this.lastCategory = "All";
         this.lastTaskStatus = TaskStatus.All.toString();
-        this.lastOrderType = OrderType.Closest.toString();
+        this.lastOrderType = OrderType.Upcoming.toString();
         tasks = DatabaseManager.getAll();
         adapter = new TaskListAdapter(tasks, activity.getApplication());
 

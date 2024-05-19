@@ -1,7 +1,6 @@
 package com.example.todolist_mobile_app.Recycler;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Dialogs.DialogInfo;
-import com.example.todolist_mobile_app.Enums.Categories;
+import com.example.todolist_mobile_app.Enums.OrderType;
+import com.example.todolist_mobile_app.Enums.TaskStatus;
 import com.example.todolist_mobile_app.R;
 import com.example.todolist_mobile_app.Utils.DateFormatter;
 
@@ -85,7 +85,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         tasks.clear();
 
         for (TaskData data : originalTasks) {
-            boolean matchesCategory = category.equalsIgnoreCase("all") || data.getCategory().toString().equalsIgnoreCase(category);
+            boolean matchesCategory = category.equalsIgnoreCase(TaskStatus.All.toString()) || data.getCategory().toString().equalsIgnoreCase(category);
             boolean matchesQuery = query.isEmpty() || data.getTitle().toLowerCase().contains(query.toLowerCase());
 
             if (matchesCategory && matchesQuery) {
@@ -93,14 +93,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             }
         }
 
-        if (!taskStatus.equalsIgnoreCase("All")) {
-            boolean isFinished = taskStatus.equalsIgnoreCase("Done");
+        if (!taskStatus.equalsIgnoreCase(TaskStatus.All.toString())) {
+            boolean isFinished = taskStatus.equalsIgnoreCase(TaskStatus.Done.toString());
             tasks.removeIf(task -> task.isFinished() != isFinished);
         }
 
-        if (order.equalsIgnoreCase("Closest")) {
+        if (order.equalsIgnoreCase(OrderType.Upcoming.toString())) {
             tasks.sort(Comparator.comparing(TaskData::getEndTime));
-        } else if (order.equalsIgnoreCase("Newest")) {
+        } else if (order.equalsIgnoreCase(OrderType.Newest.toString())) {
             tasks.sort(Comparator.comparing(TaskData::getStartTime).reversed());
         }
 
