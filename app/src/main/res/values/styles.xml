@@ -7,4 +7,14 @@
         <item name="android:textColorHint">@android:color/white</item>
     </style>
 
+
+    <style name="CustomToggleButton">
+        <item name="android:background">@drawable/toggle_button_on</item>
+        <item name="android:textColor">#FFFFFF</item> <!-- White text -->
+        <item name="android:textOn">Done</item>
+        <item name="android:textOff">Todo</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+
 </resources>

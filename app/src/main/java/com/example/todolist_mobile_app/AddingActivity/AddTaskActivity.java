@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,13 +26,11 @@ import com.example.todolist_mobile_app.Enums.Notifications;
 import com.example.todolist_mobile_app.R;
 import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Utils.DateFormatter;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -43,8 +42,8 @@ public class AddTaskActivity extends AppCompatActivity {
     ImageView ivClock, ivCalendar, ivBack, ivSave;
     private int hour, minute;
     DatePickerDialog datePickerDialog;
-    MaterialButtonToggleGroup toggleGroup;
-    MaterialButton button1, button2;
+    ToggleButton toggleButton;
+
     private TaskData editTask;
     private int taskId;
 
@@ -86,11 +85,9 @@ public class AddTaskActivity extends AppCompatActivity {
         spinnerNotifs.setSelection(task.getNotification().getIndex());
 
         if (task.isFinished()) {
-            button1.setChecked(false);
-            button2.setChecked(true);
+            toggleButton.setChecked(true);
         } else {
-            button1.setChecked(true);
-            button2.setChecked(false);
+            toggleButton.setChecked(false);
         }
     }
 
@@ -111,10 +108,7 @@ public class AddTaskActivity extends AppCompatActivity {
         ivClock = findViewById(R.id.ivClock);
         ivCalendar = findViewById(R.id.ivCalendar);
 
-        toggleGroup = findViewById(R.id.toggleButton);
-        button1 = findViewById(R.id.button1);
-        button1.setChecked(true);
-        button2 = findViewById(R.id.button2);
+        toggleButton = findViewById(R.id.toggleButton);
 
         ivBack = findViewById(R.id.backIcon);
         ivSave = findViewById(R.id.doneIcon);
@@ -150,8 +144,7 @@ public class AddTaskActivity extends AppCompatActivity {
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        int style = AlertDialog.THEME_HOLO_LIGHT;
-        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
+        datePickerDialog = new DatePickerDialog(this, dateSetListener, year, month, day);
         datePickerDialog.show();
     }
 
@@ -173,14 +166,6 @@ public class AddTaskActivity extends AppCompatActivity {
     private void setListeners() {
         ivClock.setOnClickListener(view -> showTimePicker());
         ivCalendar.setOnClickListener(view -> showDatePicker());
-
-        toggleGroup.addOnButtonCheckedListener((materialButtonToggleGroup, checkedId, isChecked) -> {
-            if (checkedId == R.id.button1) {
-                button2.setChecked(false);
-            } else if (checkedId == R.id.button2) {
-                button1.setChecked(false);
-            }
-        });
 
         ivBack.setOnClickListener(view -> finish());
         ivSave.setOnClickListener(this::saveTaskAndReturn);
@@ -242,11 +227,6 @@ public class AddTaskActivity extends AppCompatActivity {
         return false;
     }
 
-    private boolean getStatus() {
-        int checkedId = toggleGroup.getCheckedButtonId();
-        return checkedId == R.id.button2;
-    }
-
     private TaskData createNewTask() {
         String title = addTitle.getText().toString();
         String desc = addDesc.getText().toString();
@@ -256,7 +236,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         Categories c = Categories.fromString(spinnerCategory.getSelectedItem().toString());
         Notifications n = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString());
-        boolean isFinished = button2.isChecked();
+        boolean isFinished = toggleButton.isChecked();
         LocalDateTime endtime = DateFormatter.getFullToClass(date, time);
 
 
@@ -285,7 +265,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         Categories c = Categories.fromString(spinnerCategory.getSelectedItem().toString());
         Notifications n = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString());
-        boolean isFinished = button2.isChecked();
+        boolean isFinished = toggleButton.isChecked();
         LocalDateTime endtime = DateFormatter.getFullToClass(date, time);
 
         task.setTitle(title);
