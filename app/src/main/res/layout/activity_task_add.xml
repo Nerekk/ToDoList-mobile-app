@@ -65,7 +65,7 @@
         <EditText
             android:id="@+id/addTitle"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:hint="Write task title here.."
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -105,7 +105,7 @@
         <EditText
             android:id="@+id/addDesc"
             android:layout_width="0dp"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="top"
             android:hint="Write task description here.."
