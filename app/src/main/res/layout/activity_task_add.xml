@@ -173,28 +173,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/titleView"
                 app:layout_constraintVertical_bias="1.0" />
 
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/black"
-                android:text="FILES"
-                app:layout_constraintEnd_toStartOf="@+id/guideline6"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="Attachments"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toBottomOf="@+id/dateText" />
-
             <Spinner
                 android:id="@+id/spinnerCategory"
                 android:layout_width="0dp"
@@ -273,6 +251,8 @@
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/guideline11"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerNotifs" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
