@@ -18,7 +18,6 @@ import android.widget.ToggleButton;
 
 import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Database.DatabaseManager;
-import com.example.todolist_mobile_app.Database.TaskDatabase;
 import com.example.todolist_mobile_app.Enums.Categories;
 import com.example.todolist_mobile_app.Enums.Notifications;
 import com.example.todolist_mobile_app.R;
@@ -42,6 +41,8 @@ public class AddTaskViewManager {
     ToggleButton toggleButton;
 
     private TaskData editTask;
+
+    private boolean freshTask;
     private int taskId;
 
     private String[] categories;
@@ -49,7 +50,6 @@ public class AddTaskViewManager {
 
     public AddTaskViewManager(AddTaskActivity activity) {
         this.activity = activity;
-
         mapComponents();
         setSpinners();
         setListeners();
@@ -62,7 +62,10 @@ public class AddTaskViewManager {
         taskId = intent.getIntExtra(TaskData.ID, -1);
 
         if (taskId != -1) {
+            freshTask = false;
             fillActivity(DatabaseManager.getTaskById(taskId));
+        } else {
+            freshTask = true;
         }
     }
 
@@ -111,9 +114,7 @@ public class AddTaskViewManager {
         categories = Categories.fillCategories(false);
         notifications = Notifications.fillNotifications();
         catAdapter = new ArrayAdapter<>(activity, R.layout.spinner_item, categories);
-//        catAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         notifAdapter = new ArrayAdapter<>(activity, R.layout.spinner_item, notifications);
-//        notifAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
 
         spinnerCategory.setAdapter(catAdapter);
         spinnerNotifs.setAdapter(notifAdapter);
@@ -210,9 +211,10 @@ public class AddTaskViewManager {
         Notifications n = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString());
         boolean isFinished = toggleButton.isChecked();
         LocalDateTime endtime = DateFormatter.getFullToClass(date, time);
+        TaskData task = new TaskData(title, desc, endtime, isFinished, n, c);
+        task.setId(DatabaseManager.getFirstUnusedId());
 
-
-        return new TaskData(title, desc, endtime, isFinished, n, c);
+        return task;
     }
 
     private LocalDateTime getDateTimeFromActivity() {
@@ -252,18 +254,16 @@ public class AddTaskViewManager {
     public void saveTaskAndReturn(View view) {
         int notifyTime = Notifications.fromValue(spinnerNotifs.getSelectedItem().toString()).getValue();
         if (!isEndTimeValid(getDateTimeFromActivity(), notifyTime) && notifyTime!=0) {
-            Toast.makeText(activity, "To use notifications, the time cannot be earlier than the present!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Time cannot be earlier than the present for notification!", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent resultIntent = new Intent();
 
-        if (taskId == -1) {
+        if (freshTask) {
             if (handleNewTaskCreation(resultIntent)) return;
-
         } else {
             if (handleExistingTaskUpdate(resultIntent)) return;
         }
-
 
         activity.setResult(RESULT_OK, resultIntent);
         activity.finish();
