@@ -26,4 +26,8 @@ public interface TaskDataDao {
 
     @Query("DELETE FROM tasks_table WHERE id = :id")
     void deleteTaskById(int id);
+
+    @Query("SELECT MAX(id) FROM tasks_table")
+    int getMaxId();
+
 }
