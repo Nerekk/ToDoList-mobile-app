@@ -21,9 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist_mobile_app.AddingActivity.AddTaskActivity;
 import com.example.todolist_mobile_app.Data.FileModel;
+import com.example.todolist_mobile_app.Database.DatabaseManager;
+import com.example.todolist_mobile_app.Enums.Notifications;
 import com.example.todolist_mobile_app.MainActivity;
 import com.example.todolist_mobile_app.R;
 import com.example.todolist_mobile_app.Data.TaskData;
+import com.example.todolist_mobile_app.Recycler.RecyclerViewManager;
+import com.example.todolist_mobile_app.Recycler.TaskListAdapter;
 import com.example.todolist_mobile_app.RecyclerAttachment.AttachmentListAdapter;
 import com.example.todolist_mobile_app.RecyclerAttachment.RecyclerViewAttachmentManager;
 import com.example.todolist_mobile_app.Utils.DateFormatter;
@@ -34,9 +38,11 @@ import java.util.List;
 
 public class DialogInfoFragment extends DialogFragment {
     private TaskData task;
+    private TaskListAdapter adapterTask;
     private AttachmentListAdapter adapterAttach;
     private MainActivity activity;
-    private RecyclerViewAttachmentManager rvManager;
+    private RecyclerViewAttachmentManager rvManagerAttachment;
+    private RecyclerViewManager rvManagerTask;
     private RecyclerView recyclerView;
     private FileManager fm;
     private List<FileModel> allFiles;
@@ -68,7 +74,7 @@ public class DialogInfoFragment extends DialogFragment {
         if (getArguments() != null) {
             task = (TaskData) getArguments().getSerializable("task");
         }
-
+        rvManagerTask = activity.getRvManager();
         prepareRecycler(view);
         prepareDialog(view);
         setListeners(view);
@@ -84,9 +90,9 @@ public class DialogInfoFragment extends DialogFragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapterAttach);
-        rvManager = new RecyclerViewAttachmentManager(activity, fm, task.getId());
-        rvManager.setRvManager(recyclerView, adapterAttach, allFiles);
-        rvManager.prepareSwipe();
+        rvManagerAttachment = new RecyclerViewAttachmentManager(activity, fm, task.getId());
+        rvManagerAttachment.setRvManager(recyclerView, adapterAttach, allFiles);
+        rvManagerAttachment.prepareSwipe();
     }
 
     private void prepareDialog(View view) {
@@ -117,9 +123,20 @@ public class DialogInfoFragment extends DialogFragment {
         });
 
         ivSetStatus = view.findViewById(R.id.ivDialogInfoSetStatus);
+        if (task.isFinished()) {
+            ivSetStatus.setImageResource(R.mipmap.ic_incomplete);
+        } else {
+            ivSetStatus.setImageResource(R.mipmap.ic_done);
+        }
         ivAddAttachment = view.findViewById(R.id.ivDialogInfoAddAttachment);
         ivSetStatus.setOnClickListener(v -> {
             // ustaw status taska na przeciwny i ustaw notyfikacje na off
+            task.setFinished(!task.isFinished());
+            task.setNotification(Notifications.OFF);
+            DatabaseManager.insert(task);
+            activity.getNotificationHelper().cancelNotification(task.getId());
+            rvManagerTask.getDataFromDBAndUpdateAdapter();
+            dismiss();
         });
 
         ivAddAttachment.setOnClickListener(this::openFilePicker);
@@ -157,7 +174,7 @@ public class DialogInfoFragment extends DialogFragment {
 
         List<FileModel> filesToAdd = fm.convertUrisToFileModels(selectedUris, task.getId());
         allFiles.addAll(filesToAdd);
-        rvManager.updateData(allFiles);
+        rvManagerAttachment.updateData(allFiles);
     }
 
     @Override
