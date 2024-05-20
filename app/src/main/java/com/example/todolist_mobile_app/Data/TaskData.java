@@ -8,12 +8,13 @@ import com.example.todolist_mobile_app.Enums.Categories;
 import com.example.todolist_mobile_app.Enums.Notifications;
 import com.example.todolist_mobile_app.Utils.DateFormatter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity(tableName = "tasks_table")
-public class TaskData {
-    @PrimaryKey(autoGenerate = true)
+public class TaskData implements Serializable {
+    @PrimaryKey
     private int id;
     private String title;
     private String description;
@@ -120,26 +121,6 @@ public class TaskData {
     public void setCategory(Categories category) {
         this.category = category;
     }
-
-//    public String getStartTimeFormatted() {
-//        if (startTime == null) return "None";
-//        return DateFormatter.getFullFormatToString(startTime);
-//    }
-//
-//    public String getFullEndTimeFormatted() {
-//        if (endTime == null) return "None";
-//        return DateFormatter.getFullFormatToString(endTime);
-//    }
-//
-//    public String getEndTimeFormatted() {
-//        if (endTime == null) return "None";
-//        return DateFormatter.getTimeFormatToString(endTime);
-//    }
-//
-//    public String getEndDateFormatted() {
-//        if (endTime == null) return "None";
-//        return DateFormatter.getDateFormatToString(endTime);
-//    }
 
     public LocalDateTime setEndTimeFromString(String date, String time) {
         String dateTimeString = date + " " + time;
