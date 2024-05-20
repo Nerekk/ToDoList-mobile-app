@@ -2,11 +2,12 @@ package com.example.todolist_mobile_app.Utils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class DateFormatter {
     public static String getFullToString(LocalDateTime fullTime) {
         if (fullTime == null) return "None";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, dd MMMM yyyy, HH:mm", Locale.ENGLISH);
         return fullTime.format(formatter);
     }
 
