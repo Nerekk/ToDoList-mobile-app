@@ -25,7 +25,7 @@
 
         <Spinner
             android:id="@+id/filterMenu"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/toolbarIconWidth"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:gravity="start"
@@ -35,7 +35,7 @@
 
         <Spinner
             android:id="@+id/filterTaskStatus"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/toolbarIconWidth"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:gravity="start"
@@ -45,7 +45,7 @@
 
         <Spinner
             android:id="@+id/filterOrder"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/toolbarIconWidth"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:gravity="start"
@@ -76,7 +76,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="@dimen/fabMargin"
         android:src="@drawable/icon_add"
         app:backgroundTint="@color/color_primary"
         app:layout_constraintBottom_toBottomOf="parent"

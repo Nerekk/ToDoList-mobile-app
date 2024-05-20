@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/layout_task_card_bg"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="@dimen/amrRecordHeight"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="5dp">
 
@@ -20,7 +20,7 @@
         android:maxLines="2"
         android:autoSizeTextType="uniform"
         android:autoSizeMaxTextSize="18sp"
-        android:textSize="16sp"
+        android:textSize="@dimen/amrHeaderTextSize"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -31,7 +31,7 @@
         android:id="@+id/taskDate"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:textSize="12sp"
+        android:textSize="@dimen/amrTimeTextSize"
         android:gravity="start"
         android:text="Day, 12:00"
         android:layout_marginHorizontal="10dp"
@@ -85,7 +85,7 @@
         android:layout_height="0dp"
         android:gravity="start"
         android:text="Recreation"
-        android:textSize="14sp"
+        android:textSize="@dimen/amrCategoryTextSize"
         android:layout_marginHorizontal="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -94,9 +94,9 @@
 
     <ImageView
         android:id="@+id/taskNotification"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="20dp"
+        android:layout_width="@dimen/amrAdditionalIconSize"
+        android:layout_height="@dimen/amrAdditionalIconSize"
+        android:layout_marginRight="@dimen/amrAdditionalIconMargin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -104,8 +104,8 @@
 
     <ImageView
         android:id="@+id/taskAttachment"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/amrAdditionalIconSize"
+        android:layout_height="@dimen/amrAdditionalIconSize"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/taskNotification"
@@ -115,8 +115,8 @@
 
     <ImageView
         android:id="@+id/taskStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/amrStatusIconSize"
+        android:layout_height="@dimen/amrStatusIconSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"

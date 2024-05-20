@@ -22,7 +22,7 @@
 
         <ImageView
             android:id="@+id/backIcon"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/toolbarIconWidth"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:clickable="true"
@@ -33,7 +33,7 @@
 
         <ImageView
             android:id="@+id/doneIcon"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/toolbarIconWidth"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:padding="8dp"
@@ -65,7 +65,7 @@
                 android:autoSizeTextType="uniform"
                 android:maxLines="1"
                 android:text="Title"
-                android:textSize="12sp"
+                android:textSize="@dimen/addHeaderSize"
                 app:layout_constraintEnd_toStartOf="@+id/guideline6"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toTopOf="@+id/guideline7" />
@@ -75,6 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="Write task title here.."
+                android:textSize="@dimen/addEditFieldSize"
                 app:layout_constraintEnd_toStartOf="@+id/guideline6"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/titleView" />
@@ -83,9 +84,9 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/addSpaceBetweenFields"
                 android:text="Category"
-                android:textSize="12sp"
+                android:textSize="@dimen/addHeaderSize"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/addDesc" />
 
@@ -93,9 +94,9 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/addSpaceBetweenFields"
                 android:text="Due date"
-                android:textSize="12sp"
+                android:textSize="@dimen/addHeaderSize"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
 
@@ -103,9 +104,9 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/addSpaceBetweenFields"
                 android:text="Notifications"
-                android:textSize="12sp"
+                android:textSize="@dimen/addHeaderSize"
                 app:layout_constraintStart_toStartOf="@+id/guideline11"
                 app:layout_constraintTop_toBottomOf="@+id/addDesc" />
 
@@ -120,7 +121,7 @@
                 android:lines="6"
                 android:maxHeight="100dp"
                 android:maxLines="6"
-                android:minHeight="20dp"
+                android:textSize="@dimen/addEditFieldSize"
                 app:layout_constraintEnd_toStartOf="@+id/guideline6"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -166,7 +167,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Description"
-                android:textSize="12sp"
+                android:textSize="@dimen/addHeaderSize"
                 app:layout_constraintBottom_toTopOf="@+id/addDesc"
                 app:layout_constraintEnd_toStartOf="@+id/guideline6"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -193,28 +194,28 @@
 
             <EditText
                 android:id="@+id/timeText"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/addDatePickerWidth"
+                android:layout_height="@dimen/addIconSize"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/addEditFieldSize"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <EditText
                 android:id="@+id/dateText"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/addDatePickerWidth"
+                android:layout_height="@dimen/addIconSize"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/addEditFieldSize"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/timeText" />
 
             <ImageView
                 android:id="@+id/ivCalendar"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="@dimen/addIconSize"
+                android:layout_height="@dimen/addIconSize"
                 android:layout_marginTop="5dp"
                 android:clickable="true"
                 app:layout_constraintStart_toEndOf="@+id/dateText"
@@ -223,8 +224,8 @@
 
             <ImageView
                 android:id="@+id/ivClock"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="@dimen/addIconSize"
+                android:layout_height="@dimen/addIconSize"
                 android:layout_marginTop="5dp"
                 android:clickable="true"
                 app:layout_constraintStart_toEndOf="@+id/timeText"
@@ -233,8 +234,8 @@
 
             <ToggleButton
                 android:id="@+id/toggleButton"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/addToggleButtonWidth"
+                android:layout_height="@dimen/addIconSize"
                 android:layout_marginTop="5dp"
                 android:textOn="Done"
                 android:textOff="Todo"
@@ -246,9 +247,9 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/addSpaceBetweenFields"
                 android:text="Task status"
-                android:textSize="12sp"
+                android:textSize="@dimen/addHeaderSize"
                 app:layout_constraintStart_toStartOf="@+id/guideline11"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerNotifs" />
 

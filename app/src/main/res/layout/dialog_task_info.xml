@@ -10,7 +10,7 @@
         android:id="@+id/dialogInfoView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="@dimen/dialogHorizontalMargin"
         android:background="@drawable/layout_rounded_corners"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
             android:autoSizeTextType="uniform"
             android:maxLines="2"
             android:text="Title"
-            android:textSize="24sp"
+            android:textSize="@dimen/dialogTitleSize"
             app:layout_constraintEnd_toStartOf="@+id/ivEdit"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toTopOf="@+id/guideline7" />
@@ -33,9 +33,9 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dialogSpaceBetweenFields"
             android:text="Category"
-            android:textSize="12sp"
+            android:textSize="@dimen/dialogHeaderSize"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/dialogDesc" />
 
@@ -43,9 +43,9 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dialogSpaceBetweenFields"
             android:text="Due date"
-            android:textSize="12sp"
+            android:textSize="@dimen/dialogHeaderSize"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/dialogCategory" />
 
@@ -53,9 +53,9 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dialogSpaceBetweenFields"
             android:text="Notifications"
-            android:textSize="12sp"
+            android:textSize="@dimen/dialogHeaderSize"
             app:layout_constraintStart_toStartOf="@+id/guideline11"
             app:layout_constraintTop_toBottomOf="@+id/dialogDesc" />
 
@@ -63,9 +63,9 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dialogSpaceBetweenFields"
             android:text="Created"
-            android:textSize="12sp"
+            android:textSize="@dimen/dialogHeaderSize"
             app:layout_constraintStart_toStartOf="@+id/guideline11"
             app:layout_constraintTop_toBottomOf="@+id/dialogNotifs" />
 
@@ -97,6 +97,7 @@
             android:maxLines="6"
             android:minHeight="20dp"
             android:text="Something"
+            android:textSize="@dimen/dialogFieldTextSize"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -107,6 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textSize="@dimen/dialogFieldTextSize"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -115,6 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textSize="@dimen/dialogFieldTextSize"
             app:layout_constraintStart_toStartOf="@+id/guideline11"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -123,6 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textSize="@dimen/dialogFieldTextSize"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -131,6 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textSize="@dimen/dialogFieldTextSize"
             app:layout_constraintStart_toStartOf="@+id/guideline11"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -174,7 +179,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
-            android:textSize="12sp"
+            android:textSize="@dimen/dialogHeaderSize"
             app:layout_constraintBottom_toTopOf="@+id/dialogDesc"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/dialogTitle"
@@ -184,9 +189,9 @@
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dialogSpaceBetweenFields"
             android:text="Attachments"
-            android:textSize="12sp"
+            android:textSize="@dimen/dialogHeaderSize"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/dialogEnd" />
 
@@ -194,7 +199,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvDialogInfo"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/dialogRVSize"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
