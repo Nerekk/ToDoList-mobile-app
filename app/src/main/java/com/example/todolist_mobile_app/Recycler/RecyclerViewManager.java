@@ -3,6 +3,7 @@ package com.example.todolist_mobile_app.Recycler;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,7 +40,7 @@ public class RecyclerViewManager {
         this.lastTaskStatus = TaskStatus.All.toString();
         this.lastOrderType = OrderType.Upcoming.toString();
         tasks = DatabaseManager.getAll();
-        adapter = new TaskListAdapter(tasks, activity);
+        adapter = new TaskListAdapter(tasks, activity, activity.findViewById(R.id.mainNoRvData));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setAdapter(adapter);

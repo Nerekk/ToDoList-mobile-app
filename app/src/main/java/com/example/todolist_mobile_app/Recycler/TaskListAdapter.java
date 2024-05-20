@@ -1,9 +1,11 @@
 package com.example.todolist_mobile_app.Recycler;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,12 +27,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     List<TaskData> originalTasks;
     Context context;
     MainActivity activity;
+    TextView listStatus;
 
 
-    public TaskListAdapter(List<TaskData> tasks, MainActivity activity) {
+    public TaskListAdapter(List<TaskData> tasks, MainActivity activity, TextView listStatus) {
         this.tasks = tasks;
         this.originalTasks = tasks;
         this.activity = activity;
+        this.listStatus = listStatus;
     }
 
     public void setTasks(List<TaskData> tasks) {
@@ -113,7 +117,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         } else if (order.equalsIgnoreCase(OrderType.Newest.toString())) {
             tasks.sort(Comparator.comparing(TaskData::getStartTime).reversed());
         }
-
         notifyDataSetChanged();
+
+        if (tasks.size() == 0) {
+            listStatus.setVisibility(View.VISIBLE);
+        } else {
+            listStatus.setVisibility(View.GONE);
+        }
     }
 }
