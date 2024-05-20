@@ -19,9 +19,10 @@
     <dimen name="dialogHeaderSize">12sp</dimen>
     <dimen name="dialogFieldTextSize">16sp</dimen>
     <dimen name="dialogSpaceBetweenFields">10dp</dimen>
-    <dimen name="dialogRVSize">100dp</dimen>
+    <dimen name="dialogRVSize">150dp</dimen>
     <dimen name="dialogAttachmentRecordHeight">50dp</dimen>
-    <dimen name="dialogAttachmentImageSize">50dp</dimen>
+    <dimen name="dialogAttachmentImageSize">40dp</dimen>
+    <dimen name="dialogAttachmentFieldTextSize">14sp</dimen>
 
 <!--    add task activity-->
     <dimen name="addHeaderSize">12sp</dimen>
