@@ -9,19 +9,15 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist_mobile_app.AddingActivity.AddTaskActivity;
 import com.example.todolist_mobile_app.Data.FileModel;
+import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Database.DatabaseManager;
 import com.example.todolist_mobile_app.MainActivity;
 import com.example.todolist_mobile_app.R;
-import com.example.todolist_mobile_app.Recycler.TaskViewHolder;
 import com.example.todolist_mobile_app.Utils.FileManager;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAttachmentManager {
@@ -92,6 +88,9 @@ public class RecyclerViewAttachmentManager {
                 String filename = files.get(vhId).getFileName();
                 fm.deleteAttachmentForTask(taskId, filename);
                 files.remove(vhId);
+                if (files.isEmpty()) {
+                    updateHasFileStatusToFalse();
+                }
                 notifyAdapter();
             }
 
@@ -130,6 +129,13 @@ public class RecyclerViewAttachmentManager {
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void updateHasFileStatusToFalse() {
+        TaskData data = DatabaseManager.getTaskById(taskId);
+        data.setHasFiles(false);
+        DatabaseManager.insert(data);
+        activity.getRvManager().getDataFromDBAndUpdateAdapter();
     }
 
 }

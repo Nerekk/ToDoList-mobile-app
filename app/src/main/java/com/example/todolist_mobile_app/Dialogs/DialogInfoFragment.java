@@ -174,7 +174,16 @@ public class DialogInfoFragment extends DialogFragment {
 
         List<FileModel> filesToAdd = fm.convertUrisToFileModels(selectedUris, task.getId());
         allFiles.addAll(filesToAdd);
+        if (!allFiles.isEmpty()) {
+            updateHasFileStatusToTrue();
+        }
         rvManagerAttachment.updateData(allFiles);
+    }
+
+    private void updateHasFileStatusToTrue() {
+        task.setHasFiles(true);
+        DatabaseManager.insert(task);
+        rvManagerTask.getDataFromDBAndUpdateAdapter();
     }
 
     @Override

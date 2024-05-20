@@ -13,7 +13,7 @@ import com.example.todolist_mobile_app.R;
 public class TaskViewHolder extends RecyclerView.ViewHolder {
     private int taskId;
     TextView taskCategory, taskTitle, taskDate;
-    ImageView taskStatus, taskNotification;
+    ImageView taskStatus, taskNotification, taskAttachment;
 
     public TaskViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -23,6 +23,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
         taskStatus = itemView.findViewById(R.id.taskStatus);
         taskNotification = itemView.findViewById(R.id.taskNotification);
+        taskAttachment = itemView.findViewById(R.id.taskAttachment);
     }
 
     public int getTaskId() {

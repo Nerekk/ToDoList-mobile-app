@@ -23,7 +23,7 @@ public class TaskData implements Serializable {
     private boolean isFinished;
     private Notifications notification;
     private Categories category;
-    // one more field for files/images
+    private boolean hasFiles;
 
 
     public final static String DONE = "Done";
@@ -56,6 +56,7 @@ public class TaskData implements Serializable {
         this.isFinished = isFinished;
         this.notification = notification;
         this.category = category;
+        this.hasFiles = false;
     }
 
     public int getId() {
@@ -64,6 +65,14 @@ public class TaskData implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isHasFiles() {
+        return hasFiles;
+    }
+
+    public void setHasFiles(boolean hasFiles) {
+        this.hasFiles = hasFiles;
     }
 
     public String getTitle() {

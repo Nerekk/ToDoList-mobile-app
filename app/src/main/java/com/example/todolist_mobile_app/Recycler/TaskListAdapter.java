@@ -72,6 +72,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
             holder.taskNotification.setImageResource(R.mipmap.ic_notifications_off);
         }
 
+        if (tasks.get(position).isHasFiles()) {
+            holder.taskAttachment.setVisibility(View.VISIBLE);
+        } else {
+            holder.taskAttachment.setVisibility(View.INVISIBLE);
+        }
+
         holder.itemView.setOnClickListener(view -> {
             TaskData task = tasks.get(index);
 
