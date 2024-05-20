@@ -17,6 +17,7 @@ import com.example.todolist_mobile_app.Enums.OrderType;
 import com.example.todolist_mobile_app.Enums.TaskStatus;
 import com.example.todolist_mobile_app.MainActivity;
 import com.example.todolist_mobile_app.R;
+import com.example.todolist_mobile_app.Utils.FileManager;
 
 import java.util.List;
 
@@ -25,33 +26,25 @@ public class RecyclerViewManager {
     RecyclerView recyclerView;
     TaskListAdapter adapter;
     MainActivity activity;
+    FileManager fm;
     private String lastQuery;
     private String lastCategory, lastTaskStatus, lastOrderType;
 
-    public RecyclerViewManager(MainActivity activity) {
+    public RecyclerViewManager(MainActivity activity, FileManager fm) {
         this.activity = activity;
+        this.fm = fm;
         recyclerView = activity.findViewById(R.id.recyclerView);
         this.lastQuery = "";
         this.lastCategory = "All";
         this.lastTaskStatus = TaskStatus.All.toString();
         this.lastOrderType = OrderType.Upcoming.toString();
         tasks = DatabaseManager.getAll();
-        adapter = new TaskListAdapter(tasks, activity.getApplication());
+        adapter = new TaskListAdapter(tasks, activity);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setAdapter(adapter);
 
-        prepareFloatingActionButton();
         prepareSwipe();
-    }
-
-    private void prepareFloatingActionButton() {
-        activity.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     public void prepareSwipe() {
@@ -65,8 +58,10 @@ public class RecyclerViewManager {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
 //                Toast.makeText(activity, "on Swiped " + ((TaskViewHolder)viewHolder).getTaskId(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(activity, "Task deleted", Toast.LENGTH_SHORT).show();
-                DatabaseManager.deleteById(((TaskViewHolder)viewHolder).getTaskId());
+                int taskid = ((TaskViewHolder)viewHolder).getTaskId();
+                Toast.makeText(activity, "Task " + taskid + " deleted", Toast.LENGTH_SHORT).show();
+                fm.deleteAllAttachmentsForTask(taskid);
+                DatabaseManager.deleteById(taskid);
                 getDataFromDBAndUpdateAdapter();
             }
 
