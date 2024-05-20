@@ -13,7 +13,6 @@ import java.util.concurrent.Executors;
 
 public class DatabaseManager {
     private static TaskDatabase database;
-    private static Executor executor = Executors.newSingleThreadExecutor();
 
     public static synchronized TaskDatabase initDatabase(Context context) {
         if (database == null) {
@@ -54,5 +53,21 @@ public class DatabaseManager {
         if (database == null) return null;
         TaskDataDao dao = database.taskDataDao();
         return dao.getTaskById(id);
+    }
+
+    public static synchronized int getFirstUnusedId() {
+        if (database == null) {
+            // Zwróć 1 jako domyślny ID, gdy baza danych nie została jeszcze zainicjowana
+            return -1;
+        }
+
+        // Uzyskaj dostęp do Dao z bazy danych
+        TaskDataDao taskDataDao = database.taskDataDao();
+
+        // Wykonaj zapytanie w celu znalezienia pierwszego nieużywanego ID
+        int firstUnusedId = taskDataDao.getMaxId() + 1;
+
+
+        return firstUnusedId;
     }
 }
