@@ -78,20 +78,14 @@
             app:srcCompat="@mipmap/ic_edit" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/ivDialogInfoSetStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline10"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/rvDialogInfo"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@mipmap/ic_done" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
-            app:srcCompat="@mipmap/ic_incomplete" />
 
         <TextView
             android:id="@+id/dialogDesc"
@@ -196,18 +190,25 @@
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/dialogEnd" />
 
-        <TextView
-            android:id="@+id/textView13"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDialogInfo"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:background="@color/black"
-            android:text="FILES"
-            app:layout_constraintBottom_toTopOf="@+id/imageView3"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/textView12"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+        <ImageView
+            android:id="@+id/ivDialogInfoAddAttachment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/guideline10"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/rvDialogInfo"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@mipmap/ic_attachment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
