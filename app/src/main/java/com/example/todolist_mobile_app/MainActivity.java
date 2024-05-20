@@ -80,11 +80,17 @@ public class MainActivity extends AppCompatActivity {
             handleNotification(intent);
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DialogInfoFragment dialogFragment = (DialogInfoFragment) fragmentManager.findFragmentByTag("FilePickerDialogFragment");
+        DialogInfoFragment dialogFragment = getDialogInfoFragment();
         if (dialogFragment != null) {
             dialogFragment.onActivityResult(requestCode, resultCode, intent);
         }
+    }
+
+    @Nullable
+    public DialogInfoFragment getDialogInfoFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogInfoFragment dialogFragment = (DialogInfoFragment) fragmentManager.findFragmentByTag("FilePickerDialogFragment");
+        return dialogFragment;
     }
 
     private void handleNotification(Intent intent) {

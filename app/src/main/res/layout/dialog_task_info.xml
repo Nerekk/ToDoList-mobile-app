@@ -79,8 +79,8 @@
                 android:text="Created"
                 android:textSize="@dimen/dialogHeaderSize"
                 android:textStyle="bold|italic"
-                app:layout_constraintStart_toStartOf="@+id/guideline11"
-                app:layout_constraintTop_toBottomOf="@+id/dialogNotifs" />
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toBottomOf="@+id/dialogEnd" />
 
             <ImageView
                 android:id="@+id/ivEdit"
@@ -134,20 +134,26 @@
 
             <TextView
                 android:id="@+id/dialogEnd"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="TextView"
+                android:maxLines="1"
                 android:textSize="@dimen/dialogFieldTextSize"
+                android:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toStartOf="@+id/guideline11"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <TextView
                 android:id="@+id/dialogStart"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
                 android:text="TextView"
                 android:textSize="@dimen/dialogFieldTextSize"
-                app:layout_constraintStart_toStartOf="@+id/guideline11"
+                app:layout_constraintEnd_toStartOf="@+id/guideline11"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -206,7 +212,7 @@
                 android:textSize="@dimen/dialogHeaderSize"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toBottomOf="@+id/dialogEnd" />
+                app:layout_constraintTop_toBottomOf="@+id/dialogStart" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -227,6 +233,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/rvDialogInfo"
                 app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@mipmap/ic_attachment" />
+
+            <TextView
+                android:id="@+id/dialogNoRvData"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="No attachments"
+                android:gravity="center"
+                android:textColor="@color/color_rv_empty"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@+id/rvDialogInfo"
+                app:layout_constraintEnd_toEndOf="@+id/rvDialogInfo"
+                app:layout_constraintStart_toStartOf="@+id/rvDialogInfo"
+                app:layout_constraintTop_toTopOf="@+id/rvDialogInfo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

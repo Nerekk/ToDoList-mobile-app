@@ -132,6 +132,7 @@ public class RecyclerViewAttachmentManager {
     }
 
     private void updateHasFileStatusToFalse() {
+        activity.getDialogInfoFragment().getView().findViewById(R.id.dialogNoRvData).setVisibility(View.VISIBLE);
         TaskData data = DatabaseManager.getTaskById(taskId);
         data.setHasFiles(false);
         DatabaseManager.insert(data);

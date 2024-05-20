@@ -47,6 +47,7 @@ public class DialogInfoFragment extends DialogFragment {
     private FileManager fm;
     private List<FileModel> allFiles;
     private ImageView ivEdit, ivSetStatus, ivAddAttachment;
+    private TextView rvInfo;
 
     public static DialogInfoFragment newInstance(TaskData task) {
         DialogInfoFragment fragment = new DialogInfoFragment();
@@ -106,6 +107,8 @@ public class DialogInfoFragment extends DialogFragment {
         ((TextView)view.findViewById(R.id.dialogNotifs)).setText(task.getNotificationStatus());
         ((TextView)view.findViewById(R.id.dialogEnd)).setText(DateFormatter.getFullToString(task.getEndTime()));
         ((TextView)view.findViewById(R.id.dialogStart)).setText(DateFormatter.getFullToString(task.getStartTime()));
+
+        rvInfo = view.findViewById(R.id.dialogNoRvData);
     }
 
     private void setListeners(View view) {
@@ -181,6 +184,7 @@ public class DialogInfoFragment extends DialogFragment {
     }
 
     private void updateHasFileStatusToTrue() {
+        rvInfo.setVisibility(View.GONE);
         task.setHasFiles(true);
         DatabaseManager.insert(task);
         rvManagerTask.getDataFromDBAndUpdateAdapter();

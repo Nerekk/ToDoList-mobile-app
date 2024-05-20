@@ -8,4 +8,5 @@
     <color name="color_accent">#EA46DA</color>
     <color name="color_swipe">#FF5258</color>
     <color name="color_card">#83023CED</color>
+    <color name="color_rv_empty">#BF8C8C8C</color>
 </resources>
