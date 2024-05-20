@@ -9,9 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist_mobile_app.Data.TaskData;
-import com.example.todolist_mobile_app.Dialogs.DialogInfo;
+import com.example.todolist_mobile_app.Dialogs.DialogInfoFragment;
 import com.example.todolist_mobile_app.Enums.OrderType;
 import com.example.todolist_mobile_app.Enums.TaskStatus;
+import com.example.todolist_mobile_app.MainActivity;
 import com.example.todolist_mobile_app.R;
 import com.example.todolist_mobile_app.Utils.DateFormatter;
 
@@ -23,12 +24,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
     List<TaskData> tasks;
     List<TaskData> originalTasks;
     Context context;
+    MainActivity activity;
 
 
-    public TaskListAdapter(List<TaskData> tasks, Context context) {
+    public TaskListAdapter(List<TaskData> tasks, MainActivity activity) {
         this.tasks = tasks;
         this.originalTasks = tasks;
-        this.context = context;
+        this.activity = activity;
     }
 
     public void setTasks(List<TaskData> tasks) {
@@ -72,7 +74,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
 
         holder.itemView.setOnClickListener(view -> {
             TaskData task = tasks.get(index);
-            new DialogInfo(context, TaskListAdapter.this, task);
+
+            DialogInfoFragment dialogFragment = DialogInfoFragment.newInstance(task);
+            dialogFragment.show(activity.getSupportFragmentManager(), "FilePickerDialogFragment");
         });
     }
 
