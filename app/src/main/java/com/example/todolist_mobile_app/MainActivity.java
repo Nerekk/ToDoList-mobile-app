@@ -52,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
         return fm;
     }
 
+    public NotificationHelper getNotificationHelper() {
+        return notificationHelper;
+    }
+
+    public RecyclerViewManager getRvManager() {
+        return rvManager;
+    }
+
     public void goToAddTaskActivity(View view) {
         Intent intent = new Intent(this, AddTaskActivity.class);
         startActivityForResult(intent, REQUEST_CODE_TASK_ACTIVITY);
