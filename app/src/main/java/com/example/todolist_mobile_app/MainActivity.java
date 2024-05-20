@@ -8,19 +8,25 @@ import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 
 import com.example.todolist_mobile_app.AddingActivity.AddTaskActivity;
 import com.example.todolist_mobile_app.Data.TaskData;
 import com.example.todolist_mobile_app.Database.DatabaseManager;
+import com.example.todolist_mobile_app.Dialogs.DialogInfoFragment;
 import com.example.todolist_mobile_app.Notifications.NotificationHelper;
 import com.example.todolist_mobile_app.Recycler.RecyclerViewManager;
+import com.example.todolist_mobile_app.Utils.FileManager;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerViewManager rvManager;
     private ToolbarManager toolbarManager;
     private NotificationHelper notificationHelper;
+    private FileManager fm;
 
+    public static final int REQUEST_CODE_SELECT_FILES = 1;
+    public static final int REQUEST_CODE_TASK_ACTIVITY = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
         notificationHelper = new NotificationHelper(this);
 
         DatabaseManager.initDatabase(this);
-
-        rvManager = new RecyclerViewManager(this);
+        Log.i("CHECKID", "ID: " + DatabaseManager.getFirstUnusedId());
+        fm = new FileManager(this);
+        rvManager = new RecyclerViewManager(this, fm);
 
         findViewById(R.id.fab).setOnClickListener(this::goToAddTaskActivity);
 
@@ -41,11 +48,13 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MY_TEST", "ONCREATE");
     }
 
-
+    public FileManager getFileManager() {
+        return fm;
+    }
 
     public void goToAddTaskActivity(View view) {
         Intent intent = new Intent(this, AddTaskActivity.class);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, REQUEST_CODE_TASK_ACTIVITY);
     }
 
     @Override
@@ -58,17 +67,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.i("MY_TEST", "HALO");
-        if (requestCode == 1 && resultCode == RESULT_OK && intent != null) {
+        Log.i("MY_TEST", "HALO " + requestCode);
+        if (requestCode == REQUEST_CODE_TASK_ACTIVITY && resultCode == RESULT_OK && intent != null) {
             handleNotification(intent);
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogInfoFragment dialogFragment = (DialogInfoFragment) fragmentManager.findFragmentByTag("FilePickerDialogFragment");
+        if (dialogFragment != null) {
+            dialogFragment.onActivityResult(requestCode, resultCode, intent);
         }
     }
 
     private void handleNotification(Intent intent) {
         int notifyId = intent.getIntExtra(TaskData.NOTIFY_ID, -1);
         int notifyOperation = intent.getIntExtra(TaskData.NOTIFY_OPERATION, -1);
+        Log.i("MY_TEST", "GOT NOTIFY ID: " + notifyId + " OP: " + notifyOperation);
         if (notifyOperation != -1) {
-            Log.i("MY_TEST", "GOT NOTIFY ID: " + notifyId + " OP: " + notifyOperation);
+//            Log.i("MY_TEST", "GOT NOTIFY ID: " + notifyId + " OP: " + notifyOperation);
             TaskData data = DatabaseManager.getTaskById(notifyId);
             Log.i("MY_TEST", "TAKING DATA: " + data.getTitle());
 
