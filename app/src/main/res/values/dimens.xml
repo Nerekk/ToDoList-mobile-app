@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    activity main-->
+    <!--    activity main-->
     <dimen name="toolbarIconWidth">50dp</dimen>
     <dimen name="fabMargin">30dp</dimen>
+    <dimen name="svTextSize">18sp</dimen>
 
-<!--    activity main recycler-->
+    <!--    activity main recycler-->
     <dimen name="amrRecordHeight">80dp</dimen>
     <dimen name="amrStatusIconSize">50dp</dimen>
     <dimen name="amrHeaderTextSize">16sp</dimen>
+    <dimen name="amrHeaderAuto">18sp</dimen>
     <dimen name="amrCategoryTextSize">14sp</dimen>
     <dimen name="amrTimeTextSize">12sp</dimen>
     <dimen name="amrAdditionalIconSize">30dp</dimen>
     <dimen name="amrAdditionalIconMargin">20dp</dimen>
+    <dimen name="amrTaskMarginH">10dp</dimen>
+    <dimen name="amrTaskMarginV">5dp</dimen>
 
-<!--    dialog info-->
+    <!--    dialog info-->
     <dimen name="dialogHorizontalMargin">20dp</dimen>
     <dimen name="dialogTitleSize">24sp</dimen>
     <dimen name="dialogHeaderSize">12sp</dimen>
@@ -23,11 +27,13 @@
     <dimen name="dialogAttachmentRecordHeight">50dp</dimen>
     <dimen name="dialogAttachmentImageSize">40dp</dimen>
     <dimen name="dialogAttachmentFieldTextSize">14sp</dimen>
+    <dimen name="dialogButtonSize">40dp</dimen>
 
-<!--    add task activity-->
+    <!--    add task activity-->
     <dimen name="addHeaderSize">12sp</dimen>
     <dimen name="addEditFieldSize">18sp</dimen>
     <dimen name="addSpaceBetweenFields">15dp</dimen>
+    <dimen name="addSpaceDesc">30dp</dimen>
     <dimen name="addIconSize">40dp</dimen>
     <dimen name="addDatePickerWidth">120dp</dimen>
     <dimen name="addToggleButtonWidth">90dp</dimen>
