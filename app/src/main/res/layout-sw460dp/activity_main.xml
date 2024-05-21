@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary"
+        android:elevation="4dp"
+        app:contentInsetEnd="10dp"
+        app:contentInsetStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+        <Spinner
+            android:id="@+id/filterMenu"
+            android:layout_width="@dimen/toolbarIconWidth"
+            android:layout_height="@dimen/toolbarIconWidth"
+            android:layout_gravity="start"
+            android:gravity="start"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="20dp"
+            android:background="@mipmap/ic_task_category"/>
+
+        <Spinner
+            android:id="@+id/filterTaskStatus"
+            android:layout_width="@dimen/toolbarIconWidth"
+            android:layout_height="@dimen/toolbarIconWidth"
+            android:layout_gravity="start"
+            android:gravity="start"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="20dp"
+            android:background="@mipmap/ic_task_status"/>
+
+        <Spinner
+            android:id="@+id/filterOrder"
+            android:layout_width="@dimen/toolbarIconWidth"
+            android:layout_height="@dimen/toolbarIconWidth"
+            android:layout_gravity="start"
+            android:gravity="start"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="20dp"
+            android:background="@mipmap/ic_task_order"/>
+
+        <SearchView
+            android:id="@+id/action_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:searchIcon="@mipmap/ic_search"
+            android:layout_gravity="end"
+            android:theme="@style/search_view_style"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fabMargin"
+        android:src="@drawable/icon_add"
+        android:scaleX="1.6"
+        android:scaleY="1.6"
+        app:backgroundTint="@color/color_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearance="@style/RoundFAB"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/mainNoRvData"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="No tasks to display"
+        android:textSize="30dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:textColor="@color/color_rv_empty"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+        app:layout_constraintStart_toStartOf="@+id/recyclerView"
+        app:layout_constraintTop_toTopOf="@+id/recyclerView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
