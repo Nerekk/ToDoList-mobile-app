@@ -23,7 +23,7 @@
         <ImageView
             android:id="@+id/backIcon"
             android:layout_width="@dimen/toolbarIconWidth"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/toolbarIconWidth"
             android:layout_gravity="start"
             android:clickable="true"
             android:padding="8dp"
@@ -34,7 +34,7 @@
         <ImageView
             android:id="@+id/doneIcon"
             android:layout_width="@dimen/toolbarIconWidth"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/toolbarIconWidth"
             android:layout_gravity="end"
             android:padding="8dp"
             android:src="@drawable/ic_done_48"
@@ -115,7 +115,7 @@
                 android:id="@+id/addDesc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/addSpaceDesc"
                 android:gravity="top"
                 android:hint="Write task description here.."
                 android:lines="6"
