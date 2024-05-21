@@ -83,6 +83,12 @@ public class DialogInfoFragment extends DialogFragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        rvManagerAttachment.updateIsEmptyTextInfo();
+    }
+
     private void prepareRecycler(View view) {
         recyclerView = view.findViewById(R.id.rvDialogInfo);
         fm = activity.getFileManager();

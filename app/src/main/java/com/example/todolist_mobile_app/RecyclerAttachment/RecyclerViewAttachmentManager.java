@@ -63,13 +63,25 @@ public class RecyclerViewAttachmentManager {
     public void updateData(List<FileModel> models) {
         Log.i("ADD_TEST", "MY MODEL: " + models);
         files = models;
+        update();
+    }
+
+    private void update() {
         adapter.setFiles(files);
+        updateIsEmptyTextInfo();
         adapter.notifyDataSetChanged();
     }
 
+    public void updateIsEmptyTextInfo() {
+        if (adapter.getItemCount() == 0) {
+            activity.getDialogInfoFragment().getView().findViewById(R.id.dialogNoRvData).setVisibility(View.VISIBLE);
+        } else {
+            activity.getDialogInfoFragment().getView().findViewById(R.id.dialogNoRvData).setVisibility(View.GONE);
+        }
+    }
+
     private void notifyAdapter() {
-        adapter.setFiles(files);
-        adapter.notifyDataSetChanged();
+        update();
     }
 
     public void prepareSwipe() {
