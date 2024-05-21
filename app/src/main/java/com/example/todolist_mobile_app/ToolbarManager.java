@@ -40,7 +40,7 @@ public class ToolbarManager {
         spinnerOrder = activity.findViewById(R.id.filterOrder);
 
         menuSearch = activity.findViewById(R.id.action_view);
-        menuSearch.setQueryHint("Search task..");
+        menuSearch.setQueryHint("Search..");
 
     }
 
