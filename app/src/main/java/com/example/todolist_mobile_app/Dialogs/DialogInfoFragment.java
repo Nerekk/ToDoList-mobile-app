@@ -89,6 +89,11 @@ public class DialogInfoFragment extends DialogFragment {
         rvManagerAttachment.updateIsEmptyTextInfo();
     }
 
+    public static void createTaskInfo(AppCompatActivity activity, TaskData task) {
+        DialogInfoFragment dialogFragment = DialogInfoFragment.newInstance(task);
+        dialogFragment.show(activity.getSupportFragmentManager(), "FilePickerDialogFragment");
+    }
+
     private void prepareRecycler(View view) {
         recyclerView = view.findViewById(R.id.rvDialogInfo);
         fm = activity.getFileManager();
