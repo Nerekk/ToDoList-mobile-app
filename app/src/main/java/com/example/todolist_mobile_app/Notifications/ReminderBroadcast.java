@@ -59,6 +59,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
     private static PendingIntent createActivityIntent(Context context, int notificationId) {
         Intent activityIntent = new Intent(context, MainActivity.class);
         activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activityIntent.putExtra("opentask", notificationId);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, notificationId, activityIntent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
         return pendingIntent;
     }
