@@ -31,7 +31,7 @@
 
     <!--    add task activity-->
     <dimen name="addHeaderSize">12sp</dimen>
-    <dimen name="addEditFieldSize">18sp</dimen>
+    <dimen name="addEditFieldSize">17sp</dimen>
     <dimen name="addSpaceBetweenFields">15dp</dimen>
     <dimen name="addSpaceDesc">30dp</dimen>
     <dimen name="addIconSize">40dp</dimen>
