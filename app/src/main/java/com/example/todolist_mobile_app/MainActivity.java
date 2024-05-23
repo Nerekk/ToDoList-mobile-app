@@ -47,7 +47,18 @@ public class MainActivity extends AppCompatActivity {
 
         toolbarManager = new ToolbarManager(this, rvManager);
 
+        showTaskInfoDialogIfLaunchedByNotification();
+
         Log.i("MY_TEST", "ONCREATE");
+    }
+
+    private void showTaskInfoDialogIfLaunchedByNotification() {
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("opentask")) {
+            int id = intent.getIntExtra("opentask", -1);
+            TaskData task = DatabaseManager.getTaskById(id);
+            DialogInfoFragment.createTaskInfo(this, task);
+        }
     }
 
     public FileManager getFileManager() {
