@@ -31,7 +31,7 @@ public enum Notifications {
     public static String getStringNotification(Notifications notifications) {
         int v = notifications.getValue();
         if (v == 0) return "Off";
-        return v + "minutes";
+        return v + " minutes";
     }
 
     public int getIndex() {
@@ -52,7 +52,7 @@ public enum Notifications {
                 notifications[i] = "Off";
                 continue;
             }
-            notifications[i] = n[i].getValue() + " minutes";
+            notifications[i] = n[i].getValue() + " mins";
         }
         return notifications;
     }
