@@ -85,8 +85,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         holder.itemView.setOnClickListener(view -> {
             TaskData task = tasks.get(index);
 
-            DialogInfoFragment dialogFragment = DialogInfoFragment.newInstance(task);
-            dialogFragment.show(activity.getSupportFragmentManager(), "FilePickerDialogFragment");
+            DialogInfoFragment.createTaskInfo(activity, task);
         });
     }
 
